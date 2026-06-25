@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+@theme {
+  /* === Colors (Binance-inspired — shared with KDP Ads Autopilot) === */
+  --color-canvas-dark: #0b0e11;
+  --color-surface-card-dark: #1e2329;
+  --color-surface-elevated-dark: #2b3139;
+  --color-canvas-light: #ffffff;
+  --color-surface-soft-light: #fafafa;
+  --color-hairline-on-dark: #2b3139;
+  --color-hairline-on-light: #eaecef;
+  --color-primary: #FCD535;
+  --color-primary-active: #f0b90b;
+  --color-primary-disabled: #3a3a1f;
+  --color-trading-up: #0ecb81;
+  --color-trading-down: #f6465d;
+  --color-info: #3b82f6;
+  --color-body: #eaecef;
+  --color-ink: #181a20;
+  --color-muted: #707a8a;
+  --color-muted-strong: #929aa5;
+  --color-on-primary: #181a20;
+  --color-on-dark: #ffffff;
+
+  /* === Font Families === */
+  --font-display: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-number: var(--font-ibm-plex-sans), ui-monospace, SFMono-Regular, "Roboto Mono", monospace;
+
+  /* === Border Radius === */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-pill: 9999px;
+
+  /* === Custom Spacing (4px base) === */
+  --spacing-xxs: 4px;
+  --spacing-xs: 8px;
+  --spacing-sm: 12px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-xxl: 48px;
+  --spacing-section: 80px;
+
+  /* ⚠️  COLLISION WARNING (carried over from the design system):
+     --spacing-sm/md/lg/xl tokens collide with Tailwind 4's max-w-{name}
+     resolution. NEVER use max-w-sm / max-w-md / max-w-lg / max-w-xl.
+     Use arbitrary values instead: max-w-[24rem], max-w-[28rem], etc.
+     max-w-2xl / max-w-4xl / max-w-7xl are safe. */
+
+  /* === Type Scale === */
+  --text-display-md: 2.5rem;
+  --text-display-md--line-height: 1.15;
+  --text-display-md--letter-spacing: -0.3px;
+
+  --text-display-sm: 2rem;
+  --text-display-sm--line-height: 1.2;
+
+  --text-title-lg: 1.5rem;
+  --text-title-lg--line-height: 1.3;
+
+  --text-title-md: 1.25rem;
+  --text-title-md--line-height: 1.35;
+
+  --text-title-sm: 1rem;
+  --text-title-sm--line-height: 1.4;
+
+  --text-body-md: 0.875rem;
+  --text-body-md--line-height: 1.5;
+
+  --text-body-sm: 0.8125rem;
+  --text-body-sm--line-height: 1.5;
+
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1.4;
+
+  --text-button: 0.875rem;
+  --text-button--line-height: 1;
+}
+
+/* === Base resets === */
+body {
+  background-color: var(--color-canvas-dark);
+  color: var(--color-body);
+  font-family: var(--font-display);
+}
