@@ -16,6 +16,19 @@ import { amazonProductUrl } from "@/lib/amazon";
 import { withAffiliateTag } from "@/lib/affiliate";
 import { logBuyClick } from "@/lib/analytics";
 
+// This redirect depends on the visitor's country, so it must run per-request and
+// never be cached at the edge/CDN (otherwise one visitor's destination would be
+// reused for everyone).
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
+/** 302 redirect that is explicitly never cached. */
+function noStoreRedirect(url: string | URL): NextResponse {
+  const res = NextResponse.redirect(url, 302);
+  res.headers.set("Cache-Control", "no-store, max-age=0, must-revalidate");
+  return res;
+}
+
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ slug: string }> },
@@ -25,7 +38,7 @@ export async function GET(
 
   // Unknown book → send them to the home page rather than a dead end.
   if (!book) {
-    return NextResponse.redirect(new URL("/", request.url), 302);
+    return noStoreRedirect(new URL("/", request.url));
   }
 
   // Detect country: real edge header first, dev/test query override second.
@@ -47,5 +60,5 @@ export async function GET(
     utmSource: request.nextUrl.searchParams.get("utm_source") ?? undefined,
   });
 
-  return NextResponse.redirect(destination, 302);
+  return noStoreRedirect(destination);
 }
