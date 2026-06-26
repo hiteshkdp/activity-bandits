@@ -10,8 +10,11 @@ export function SiteFooter() {
   const links = Object.entries(SITE.socials).filter(([, href]) => href);
 
   return (
-    <footer className="mt-auto border-t border-hairline-on-dark">
-      <div className="mx-auto flex max-w-4xl flex-col gap-3 px-5 py-8 text-body-sm text-muted">
+    <footer className="mt-auto border-t border-hairline bg-surface-soft">
+      <div className="mx-auto flex max-w-[88rem] flex-col gap-3 px-5 py-10 text-body-sm text-muted">
+        <span className="font-display text-title-sm font-bold text-ink">
+          {SITE.authorName}
+        </span>
         {links.length > 0 && (
           <nav className="flex flex-wrap gap-4">
             {links.map(([key, href]) => (
@@ -20,7 +23,7 @@ export function SiteFooter() {
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-primary"
+                className="font-semibold hover:text-primary"
               >
                 {SOCIAL_LABELS[key] ?? key}
               </a>
@@ -28,11 +31,11 @@ export function SiteFooter() {
           </nav>
         )}
         <p>
-          © {SITE.authorName}. As an Amazon customer you&apos;ll be sent to your
-          local Amazon store to complete any purchase.
+          © {SITE.authorName}. You&apos;ll be sent to your local Amazon store to
+          complete any purchase.
         </p>
         {/*
-          AFFILIATE DISCLOSURE: if you ever enable AFFILIATE_TAGS in config/site.ts,
+          AFFILIATE DISCLOSURE: if you enable AFFILIATE_TAGS in config/site.ts,
           replace the line above with a clear affiliate disclosure, e.g.
           "As an Amazon Associate I earn from qualifying purchases."
         */}

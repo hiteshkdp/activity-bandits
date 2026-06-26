@@ -1,33 +1,34 @@
 import type { Metadata } from "next";
-import { Inter, IBM_Plex_Sans } from "next/font/google";
+import { Poppins, Nunito } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import { SITE } from "@/config/site";
 
-const inter = Inter({
+const poppins = Poppins({
   subsets: ["latin"],
+  weight: ["500", "600", "700"],
   display: "swap",
-  variable: "--font-inter",
+  variable: "--font-poppins",
 });
 
-const ibmPlexSans = IBM_Plex_Sans({
+const nunito = Nunito({
   subsets: ["latin"],
-  weight: ["400", "500", "700"],
+  weight: ["400", "600", "700", "800"],
   display: "swap",
-  variable: "--font-ibm-plex-sans",
+  variable: "--font-nunito",
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: `${SITE.authorName} — Books`,
+    default: `${SITE.authorName} — Fun Activity Books for Kids`,
     template: `%s — ${SITE.authorName}`,
   },
   description: SITE.tagline,
   openGraph: {
     type: "website",
     siteName: SITE.authorName,
-    title: `${SITE.authorName} — Books`,
+    title: `${SITE.authorName} — Fun Activity Books for Kids`,
     description: SITE.tagline,
   },
   twitter: {
@@ -43,11 +44,11 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${ibmPlexSans.variable} h-full antialiased`}
+      className={`${poppins.variable} ${nunito.variable} h-full antialiased`}
     >
       <body
         suppressHydrationWarning={true}
-        className="min-h-full flex flex-col font-display bg-canvas-dark text-body"
+        className="min-h-full flex flex-col font-body bg-canvas text-body"
       >
         {children}
         <Analytics />

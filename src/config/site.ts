@@ -10,10 +10,16 @@ import type { MarketplaceCode } from "@/data/marketplaces";
 
 export const SITE = {
   /** Your author / pen name or series brand — shown in the header & titles. */
-  authorName: "Your Author Name",
+  authorName: "Activity Bandits",
+
+  /**
+   * Path to your logo image (in /public). Rendered as a rounded mark next to
+   * the wordmark. Set to "" to fall back to the placeholder mark.
+   */
+  logo: "/activitybanditslogo.png",
 
   /** One-line hook shown under the hero and in link previews. */
-  tagline: "All my books in one place — tap any cover to grab it from your local Amazon store.",
+  tagline: "Fun activity & puzzle books for kids — tap any cover to grab it from your local Amazon store.",
 
   /**
    * Canonical site URL. Update to your real domain once purchased

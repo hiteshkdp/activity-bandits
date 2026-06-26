@@ -1,87 +1,82 @@
 @import "tailwindcss";
 
 @theme {
-  /* === Colors (Binance-inspired — shared with KDP Ads Autopilot) === */
-  --color-canvas-dark: #0b0e11;
-  --color-surface-card-dark: #1e2329;
-  --color-surface-elevated-dark: #2b3139;
-  --color-canvas-light: #ffffff;
-  --color-surface-soft-light: #fafafa;
-  --color-hairline-on-dark: #2b3139;
-  --color-hairline-on-light: #eaecef;
-  --color-primary: #FCD535;
-  --color-primary-active: #f0b90b;
-  --color-primary-disabled: #3a3a1f;
-  --color-trading-up: #0ecb81;
-  --color-trading-down: #f6465d;
-  --color-info: #3b82f6;
-  --color-body: #eaecef;
-  --color-ink: #181a20;
-  --color-muted: #707a8a;
-  --color-muted-strong: #929aa5;
-  --color-on-primary: #181a20;
-  --color-on-dark: #ffffff;
+  /* === Clean + warm palette (brand teal/yellow from the logo) === */
+  --color-canvas: #ffffff;          /* clean white page */
+  --color-surface: #ffffff;         /* cards */
+  --color-surface-soft: #f6f2ea;    /* warm cream sections / cover backdrop */
+  --color-ink: #232a33;             /* charcoal headings / strong text */
+  --color-body: #4b5563;            /* body text */
+  --color-muted: #97a0ab;           /* secondary text */
+  --color-hairline: #ece7dd;        /* warm light borders */
 
-  /* === Font Families === */
-  --font-display: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-number: var(--font-ibm-plex-sans), ui-monospace, SFMono-Regular, "Roboto Mono", monospace;
+  /* Brand */
+  --color-primary: #14b3c2;         /* teal — buttons, links, active */
+  --color-primary-strong: #0e96a3;  /* hover */
+  --color-on-primary: #ffffff;
+  --color-accent: #fbc02d;          /* sunny yellow accent (logo brush) */
+  --color-accent-soft: #fff3cf;
 
-  /* === Border Radius === */
-  --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 8px;
-  --radius-xl: 12px;
+  /* === Fonts === */
+  --font-display: var(--font-poppins), "Trebuchet MS", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: var(--font-nunito), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* === Border radius (clean, moderate) === */
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
   --radius-pill: 9999px;
 
-  /* === Custom Spacing (4px base) === */
-  --spacing-xxs: 4px;
-  --spacing-xs: 8px;
-  --spacing-sm: 12px;
-  --spacing-md: 16px;
-  --spacing-lg: 24px;
-  --spacing-xl: 32px;
-  --spacing-xxl: 48px;
-  --spacing-section: 80px;
-
-  /* ⚠️  COLLISION WARNING (carried over from the design system):
-     --spacing-sm/md/lg/xl tokens collide with Tailwind 4's max-w-{name}
-     resolution. NEVER use max-w-sm / max-w-md / max-w-lg / max-w-xl.
-     Use arbitrary values instead: max-w-[24rem], max-w-[28rem], etc.
-     max-w-2xl / max-w-4xl / max-w-7xl are safe. */
-
-  /* === Type Scale === */
-  --text-display-md: 2.5rem;
-  --text-display-md--line-height: 1.15;
-  --text-display-md--letter-spacing: -0.3px;
-
-  --text-display-sm: 2rem;
-  --text-display-sm--line-height: 1.2;
-
+  /* === Type scale === */
+  --text-display-lg: 3rem;
+  --text-display-lg--line-height: 1.08;
+  --text-display-md: 2.25rem;
+  --text-display-md--line-height: 1.12;
+  --text-display-sm: 1.75rem;
+  --text-display-sm--line-height: 1.18;
   --text-title-lg: 1.5rem;
-  --text-title-lg--line-height: 1.3;
-
-  --text-title-md: 1.25rem;
-  --text-title-md--line-height: 1.35;
-
+  --text-title-lg--line-height: 1.25;
+  --text-title-md: 1.125rem;
+  --text-title-md--line-height: 1.3;
   --text-title-sm: 1rem;
-  --text-title-sm--line-height: 1.4;
-
-  --text-body-md: 0.875rem;
-  --text-body-md--line-height: 1.5;
-
+  --text-title-sm--line-height: 1.35;
+  --text-body-md: 0.9375rem;
+  --text-body-md--line-height: 1.6;
   --text-body-sm: 0.8125rem;
   --text-body-sm--line-height: 1.5;
-
+  --text-button: 0.9375rem;
+  --text-button--line-height: 1;
   --text-caption: 0.75rem;
   --text-caption--line-height: 1.4;
-
-  --text-button: 0.875rem;
-  --text-button--line-height: 1;
 }
 
-/* === Base resets === */
+/* === Base === */
 body {
-  background-color: var(--color-canvas-dark);
+  background-color: var(--color-canvas);
   color: var(--color-body);
+  font-family: var(--font-body);
+}
+
+h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
+  color: var(--color-ink);
+  letter-spacing: -0.01em;
+}
+
+/* Auto-scrolling reviews strip */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 40s linear infinite;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
 }

@@ -1,0 +1,15 @@
+/**
+ * Top Sellers — the books shown in the "Top sellers" row on the home page.
+ *
+ * EDIT THIS LIST to match your actual best-selling titles (from your KDP sales).
+ * Order matters — they display left to right. Use each book's `slug` from
+ * books.ts. Unknown slugs are ignored, so it's safe to paste.
+ */
+export const TOP_SELLER_SLUGS: string[] = [
+  "football-activity-book-for-kids",
+  "airplane-activity-book-for-kids-ages-8-12",
+  "baseball-activity-book-for-kids",
+  "ancient-egypt-activity-book-for-kids",
+  "gymnastics-activity-book-for-girls",
+  "dinosaur-activity-book-for-kids-3-5",
+];
