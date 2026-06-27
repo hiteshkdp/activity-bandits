@@ -6,10 +6,10 @@
  * books.ts. Unknown slugs are ignored, so it's safe to paste.
  */
 export const TOP_SELLER_SLUGS: string[] = [
-  "football-activity-book-for-kids",
+  "airplane-activity-book-for-kids-ages-4-8",
   "airplane-activity-book-for-kids-ages-8-12",
-  "baseball-activity-book-for-kids",
-  "ancient-egypt-activity-book-for-kids",
+  "would-you-rather-football-book-for-kids-ages-6-12",
+  "football-word-search-book-for-kids",
   "gymnastics-activity-book-for-girls",
   "dinosaur-activity-book-for-kids-3-5",
 ];
