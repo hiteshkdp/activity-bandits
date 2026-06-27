@@ -1,7 +1,8 @@
-import { BOOKS, CATEGORIES } from "@/data/books";
+import { BOOKS, CATEGORIES, AUTHORS } from "@/data/books";
 import { BookBrowser } from "@/components/BookBrowser";
 import { ReviewsStrip } from "@/components/ReviewsStrip";
 import { TopSellers } from "@/components/TopSellers";
+import { AuthorRow } from "@/components/AuthorRow";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SITE } from "@/config/site";
@@ -51,6 +52,12 @@ export default async function Home({
         <>
           <ReviewsStrip />
           <TopSellers />
+          <AuthorRow
+            author="Harry Kicker"
+            heading="Harry Kicker — Football Story Series"
+            subtitle="A read-along football adventure series for ages 5–7 — teamwork, courage and honesty, one match at a time."
+            anchor="reading-books"
+          />
         </>
       )}
 
@@ -60,6 +67,7 @@ export default async function Home({
           key={activeCategory ?? "all"}
           books={BOOKS}
           activeCategory={activeCategory}
+          authors={AUTHORS}
         />
       </main>
 

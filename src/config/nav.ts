@@ -4,6 +4,7 @@
  * matching route under src/app/.
  */
 export const NAV_LINKS: { label: string; href: string }[] = [
+  { label: "Reading Books", href: "/#reading-books" },
   { label: "About Us", href: "/about" },
   { label: "Contact", href: "/contact" },
   { label: "Free Stuff", href: "/free-stuff" },

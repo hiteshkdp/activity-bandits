@@ -9,22 +9,26 @@ type Props = {
   books: Book[];
   /** When set (via the Books menu / ?theme=), the grid is scoped to this genre. */
   activeCategory?: string | null;
+  /** Pen names available to filter by (omit/single → no author filter shown). */
+  authors?: string[];
 };
 
-export function BookBrowser({ books, activeCategory = null }: Props) {
+export function BookBrowser({ books, activeCategory = null, authors = [] }: Props) {
   const [query, setQuery] = useState("");
+  const [author, setAuthor] = useState<string | null>(null);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return books.filter((b) => {
       if (activeCategory && b.category !== activeCategory) return false;
+      if (author && b.author !== author) return false;
       if (q) {
-        const hay = `${b.title} ${b.fullTitle ?? ""} ${b.blurb} ${b.category}`.toLowerCase();
+        const hay = `${b.title} ${b.fullTitle ?? ""} ${b.blurb} ${b.category} ${b.author}`.toLowerCase();
         if (!hay.includes(q)) return false;
       }
       return true;
     });
-  }, [books, query, activeCategory]);
+  }, [books, query, activeCategory, author]);
 
   return (
     <div>
@@ -38,6 +42,24 @@ export function BookBrowser({ books, activeCategory = null }: Props) {
           >
             ← All books
           </Link>
+        </div>
+      )}
+
+      {/* Pen-name filter */}
+      {authors.length > 1 && (
+        <div className="mb-4 flex flex-wrap justify-center gap-2">
+          <AuthorChip active={author === null} onClick={() => setAuthor(null)}>
+            All authors
+          </AuthorChip>
+          {authors.map((a) => (
+            <AuthorChip
+              key={a}
+              active={author === a}
+              onClick={() => setAuthor(author === a ? null : a)}
+            >
+              {a}
+            </AuthorChip>
+          ))}
         </div>
       )}
 
@@ -88,13 +110,39 @@ export function BookBrowser({ books, activeCategory = null }: Props) {
             Try a different search term.
           </p>
           <button
-            onClick={() => setQuery("")}
+            onClick={() => {
+              setQuery("");
+              setAuthor(null);
+            }}
             className="mt-4 rounded-lg bg-primary px-5 py-2.5 text-button font-bold text-on-primary hover:bg-primary-strong"
           >
-            Clear search
+            Clear filters
           </button>
         </div>
       )}
     </div>
+  );
+}
+
+function AuthorChip({
+  children,
+  active,
+  onClick,
+}: {
+  children: React.ReactNode;
+  active: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className={`rounded-pill border px-4 py-1.5 text-body-sm font-bold transition-colors ${
+        active
+          ? "border-transparent bg-primary text-on-primary shadow-sm"
+          : "border-hairline bg-surface text-body hover:border-primary hover:text-ink"
+      }`}
+    >
+      {children}
+    </button>
   );
 }
