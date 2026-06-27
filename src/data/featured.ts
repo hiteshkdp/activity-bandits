@@ -11,5 +11,5 @@ export const TOP_SELLER_SLUGS: string[] = [
   "would-you-rather-football-book-for-kids-ages-6-12",
   "football-word-search-book-for-kids",
   "gymnastics-activity-book-for-girls",
-  "dinosaur-activity-book-for-kids-3-5",
+  "ice-hockey-activity-book-for-kids",
 ];
