@@ -19,7 +19,7 @@ export const TOP_SELLER_SLUGS: string[] = [
  * eye-catching covers (left → right). Use each book's `slug`.
  */
 export const HERO_COVER_SLUGS: string[] = [
-  "football-activity-book-for-kids",
+  "pirate-activity-book-for-kids",
   "airplane-activity-book-for-kids-ages-8-12",
   "ancient-egypt-activity-book-for-kids",
   "gymnastics-activity-book-for-girls",
