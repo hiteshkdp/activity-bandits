@@ -42,3 +42,6 @@ next-env.d.ts
 
 # Local project notes (not for the public repo)
 STATUS.md
+
+# Source book sheets — keep local, not in the public repo
+*.xlsx
