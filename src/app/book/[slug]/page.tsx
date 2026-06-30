@@ -5,6 +5,7 @@ import { BOOKS, getBook } from "@/data/books";
 import { coverUrl } from "@/lib/amazon";
 import { Stars } from "@/components/Stars";
 import { BookCard } from "@/components/BookCard";
+import { AplusGallery } from "@/components/AplusGallery";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 
@@ -129,6 +130,9 @@ export default async function BookPage({
             </div>
           </div>
         </div>
+
+        {/* A+ content from Amazon (the book's own brand content) */}
+        <AplusGallery slug={book.slug} />
 
         {/* Related books */}
         {related.length > 0 && (
