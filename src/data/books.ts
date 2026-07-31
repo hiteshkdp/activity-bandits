@@ -478,6 +478,17 @@ export const BOOKS: Book[] = [
     defaultAsin: "B09Y5XFQ85",
   },
   {
+    slug: "italy-activity-book-for-kids",
+    title: "Italy Activity Book For Kids",
+    fullTitle: "Italy Activity Book For Kids: Travel Activity Book with Coloring, Puzzles, Games, Fun Facts, Word Searches And More!",
+    author: "Activity Bandits",
+    blurb: "Travel activity book with colouring, puzzles, games, fun facts, word searches and more.",
+    category: "Travel",
+    ages: "All Ages",
+    asins: { US: "B0H9FC8619", UK: "B0H9FC8619" },
+    defaultAsin: "B0H9FC8619",
+  },
+  {
     slug: "logic-puzzle-book-for-kids-ages-8-12",
     title: "Logic Puzzle Book For Kids Ages 8-12",
     fullTitle: "Logic Puzzle Book For Kids Ages 8-12: Includes Math Logic Word Games, Crosswords And MORE!",
