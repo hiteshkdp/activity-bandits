@@ -1,14 +1,16 @@
 /**
- * Lightweight server-side event logging for "buy_click" conversions.
+ * "buy_click" conversion tracking.
  *
- * For launch this just structured-logs to the server console (visible in Vercel
- * function logs). It's deliberately swappable: when you want durable, exportable
- * rows, replace the body of logBuyClick() with a write to Vercel KV / a Supabase
- * table / your analytics provider — callers don't change.
+ * Sends a custom event to Vercel Web Analytics (same product as the pageview
+ * <Analytics /> in the root layout) AND structured-logs to the server console
+ * as a fallback (visible in Vercel function logs). Fired from the /go/[slug]
+ * redirect via `after()` so it never delays the redirect to Amazon.
  *
- * Page-view analytics is handled separately by Vercel Web Analytics (the
- * <Analytics /> component in the root layout / pages).
+ * In the Vercel dashboard: Project → Analytics → Events → "buy_click", broken
+ * down by book / country / marketplace / source (TikTok utm).
  */
+
+import { track } from "@vercel/analytics/server";
 
 export type BuyClickEvent = {
   book: string;
@@ -17,7 +19,17 @@ export type BuyClickEvent = {
   utmSource?: string;
 };
 
-export function logBuyClick(event: BuyClickEvent): void {
+export async function logBuyClick(event: BuyClickEvent): Promise<void> {
   // Structured single-line log → easy to grep/parse in Vercel logs.
   console.log("buy_click", JSON.stringify(event));
+  try {
+    await track("buy_click", {
+      book: event.book,
+      country: event.country,
+      marketplace: event.marketplace,
+      source: event.utmSource ?? "direct",
+    });
+  } catch {
+    // Analytics must never break the redirect — swallow any error.
+  }
 }

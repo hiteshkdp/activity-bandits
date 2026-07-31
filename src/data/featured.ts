@@ -21,7 +21,7 @@ export const TOP_SELLER_SLUGS: string[] = [
 export const HERO_COVER_SLUGS: string[] = [
   "pirate-activity-book-for-kids",
   "airplane-activity-book-for-kids-ages-8-12",
-  "ancient-egypt-activity-book-for-kids",
+  "would-you-rather-football-book-for-kids-ages-6-12",
   "gymnastics-activity-book-for-girls",
   "the-teamwork-triumph",
 ];

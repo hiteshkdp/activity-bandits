@@ -9,7 +9,7 @@
  * override for testing; on production the header always wins.
  */
 
-import { NextResponse, type NextRequest } from "next/server";
+import { NextResponse, type NextRequest, after } from "next/server";
 import { getBook } from "@/data/books";
 import { MARKETPLACES, marketplaceForCountry } from "@/data/marketplaces";
 import { amazonProductUrl } from "@/lib/amazon";
@@ -52,13 +52,16 @@ export async function GET(
   const productUrl = amazonProductUrl(book, marketplace);
   const destination = withAffiliateTag(productUrl, marketplace);
 
-  // Record the conversion intent (book + where they were sent).
-  logBuyClick({
-    book: book.slug,
-    country: country || "UNKNOWN",
-    marketplace: MARKETPLACES[marketplace].label,
-    utmSource: request.nextUrl.searchParams.get("utm_source") ?? undefined,
-  });
+  // Record the conversion intent (book + where they were sent). Runs AFTER the
+  // response is sent, so it never delays the redirect to Amazon.
+  after(() =>
+    logBuyClick({
+      book: book.slug,
+      country: country || "UNKNOWN",
+      marketplace: MARKETPLACES[marketplace].label,
+      utmSource: request.nextUrl.searchParams.get("utm_source") ?? undefined,
+    }),
+  );
 
   return noStoreRedirect(destination);
 }
