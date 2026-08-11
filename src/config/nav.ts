@@ -5,9 +5,9 @@
  */
 export const NAV_LINKS: { label: string; href: string }[] = [
   { label: "Reading Books", href: "/#reading-books" },
+  { label: "Free Fun", href: "/play" },
   { label: "About Us", href: "/about" },
   { label: "Contact", href: "/contact" },
-  { label: "Free Stuff", href: "/free-stuff" },
 ];
 
 /** Build the /?theme= link for a genre. */
