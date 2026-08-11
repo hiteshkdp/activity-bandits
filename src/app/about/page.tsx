@@ -17,17 +17,33 @@ export default function AboutPage() {
           About {SITE.authorName}
         </h1>
         <div className="mt-6 space-y-4 text-body-md leading-relaxed text-body">
-          <p>
-            {/* TODO: Replace with your real brand story. */}
-            {SITE.authorName} makes fun, screen-free activity books that keep kids
-            busy, curious and entertained — at home, on holiday, and everywhere in
-            between. From football and travel to puzzles and animals, every book is
-            packed with mazes, word searches, colouring and games kids actually want
-            to do.
+          <p className="text-title-sm font-semibold text-ink">
+            We make books with one simple mission: fun.
           </p>
           <p>
-            This is placeholder copy — tell me your story (how the brand started,
-            who&apos;s behind it, what you care about) and I&apos;ll drop it in.
+            We reckon the best kids&apos; books are the ones children actually{" "}
+            <em>want</em> to pick up — not because they have to, but because they
+            can&apos;t help it. So that&apos;s what we make: colourful, endlessly
+            interesting activity and puzzle books packed with mazes, word searches,
+            colouring, games and stories to get stuck into.
+          </p>
+          <p>
+            And for the football-mad ones, there&apos;s our{" "}
+            <strong className="font-semibold text-ink">Harry Kicker</strong> series
+            — fun little football stories for early readers, where every match sneaks
+            in something worth knowing (teamwork, courage, a bit of honesty) without
+            ever feeling like a lesson.
+          </p>
+          <p>
+            No screens, no pressure, no &ldquo;educational&rdquo; small print that
+            sucks the joy out of it. Just brilliant, down-to-earth fun that keeps
+            kids busy and smiling — on road trips, rainy days, long flights, or any
+            afternoon that needs saving.
+          </p>
+          <p>
+            Because when a book is genuinely fun, everything else — the focus, the
+            creativity, the quiet ten minutes for mum and dad — comes along for the
+            ride.
           </p>
         </div>
       </main>
