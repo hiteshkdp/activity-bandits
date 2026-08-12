@@ -466,6 +466,17 @@ export const BOOKS: Book[] = [
     defaultAsin: "B0D39FN337",
   },
   {
+    slug: "gymnastics-coloring-book-for-girls",
+    title: "Gymnastics Coloring Book for Girls",
+    fullTitle: "Gymnastics Coloring Book for Girls: Fun Leotard Coloring and Design Activities for Girls Who Love Gymnastics, Fashion, and Creativity Ages 6-12",
+    author: "Activity Bandits",
+    blurb: "Fun leotard colouring and design activities for girls who love gymnastics, fashion and creativity.",
+    category: "Gymnastics",
+    ages: "Ages 8-12",
+    asins: { US: "B0HD7WVZBN", UK: "B0HD7WVZBN" },
+    defaultAsin: "B0HD7WVZBN",
+  },
+  {
     slug: "ice-hockey-activity-book-for-kids",
     title: "Ice Hockey Activity Book For Kids",
     fullTitle: "Ice Hockey Activity Book For Kids: The Ultimate Hockey Themed Activity And Coloring Book | Perfect For Ice Hockey Fans: Includes Story Mazes Word Search, Design Challenges AND MORE!",
