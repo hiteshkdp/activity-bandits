@@ -25,6 +25,21 @@ export const PUZZLE_SLUGS: string[] = [
 /** Book to point quiz players at when they finish. */
 export const QUIZ_CROSS_SELL_SLUG = "amazing-football-facts-for-kids-ages-9-12";
 
+/** Football word search teaser — words hidden in the grid + the book to buy. */
+export const FOOTBALL_WORDS: string[] = [
+  "GOAL",
+  "KEEPER",
+  "STRIKER",
+  "PENALTY",
+  "OFFSIDE",
+  "WINGER",
+  "HEADER",
+  "TROPHY",
+  "CORNER",
+  "VOLLEY",
+];
+export const FOOTBALL_WORDSEARCH_BOOK = "football-word-search-book-for-kids";
+
 export type QuizQuestion = {
   q: string;
   options: string[];

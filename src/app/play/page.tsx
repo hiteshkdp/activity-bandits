@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 };
 
 const GAMES = [
+  { emoji: "⚽", title: "Football Word Search", desc: "Find the hidden football words in the grid.", href: "/play/word-search" },
   { emoji: "🃏", title: "Memory Match", desc: "Flip the cards and match the pairs of book covers.", href: "/play/memory" },
   { emoji: "🧩", title: "Sliding Puzzle", desc: "Unscramble a book cover, tile by tile.", href: "/play/sliding-puzzle" },
   { emoji: "🧠", title: "Kids Quiz", desc: "Fun trivia — how many can you get right?", href: "/play/quiz" },
