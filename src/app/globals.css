@@ -19,6 +19,9 @@
   --color-accent-ink: #4a3800;      /* dark text on yellow (price-tag badges) */
   --color-navy: #1f2450;            /* deep navy — footer / bold blocks */
   --color-navy-soft: #2b3170;
+  --color-action: #f97316;          /* orange — the "buy" action (LEGO-style) */
+  --color-action-strong: #ea680c;   /* hover */
+  --color-on-action: #ffffff;
 
   /* Right/wrong feedback (quiz) */
   --color-correct: #1f9d63;
