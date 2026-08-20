@@ -120,7 +120,7 @@ export default async function BookPage({
             <div className="mt-2">
               <a
                 href={goHref}
-                className="inline-flex items-center justify-center rounded-lg bg-primary px-7 py-3.5 text-button font-bold text-on-primary shadow-sm transition-colors hover:bg-primary-strong"
+                className="inline-flex items-center justify-center rounded-pill bg-primary px-7 py-3.5 text-button font-bold text-on-primary shadow-sm transition-colors hover:bg-primary-strong"
               >
                 Buy on Amazon →
               </a>

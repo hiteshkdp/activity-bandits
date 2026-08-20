@@ -10,9 +10,9 @@ export function SiteFooter() {
   const links = Object.entries(SITE.socials).filter(([, href]) => href);
 
   return (
-    <footer className="mt-auto border-t border-hairline bg-surface-soft">
-      <div className="mx-auto flex max-w-[88rem] flex-col gap-3 px-5 py-10 text-body-sm text-muted">
-        <span className="font-display text-title-sm font-bold text-ink">
+    <footer className="mt-auto bg-navy">
+      <div className="mx-auto flex max-w-[88rem] flex-col gap-3 px-5 py-12 text-body-sm text-white/70">
+        <span className="font-display text-title-md font-bold text-white">
           {SITE.authorName}
         </span>
         {links.length > 0 && (
@@ -23,7 +23,7 @@ export function SiteFooter() {
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-semibold hover:text-primary"
+                className="font-semibold text-white/80 hover:text-accent"
               >
                 {SOCIAL_LABELS[key] ?? key}
               </a>

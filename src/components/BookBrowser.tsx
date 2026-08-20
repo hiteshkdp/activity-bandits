@@ -114,7 +114,7 @@ export function BookBrowser({ books, activeCategory = null, authors = [] }: Prop
               setQuery("");
               setAuthor(null);
             }}
-            className="mt-4 rounded-lg bg-primary px-5 py-2.5 text-button font-bold text-on-primary hover:bg-primary-strong"
+            className="mt-4 rounded-pill bg-primary px-5 py-2.5 text-button font-bold text-on-primary hover:bg-primary-strong"
           >
             Clear filters
           </button>

@@ -16,6 +16,9 @@
   --color-on-primary: #ffffff;
   --color-accent: #fbc02d;          /* sunny yellow accent (logo brush) */
   --color-accent-soft: #fff3cf;
+  --color-accent-ink: #4a3800;      /* dark text on yellow (price-tag badges) */
+  --color-navy: #1f2450;            /* deep navy — footer / bold blocks */
+  --color-navy-soft: #2b3170;
 
   /* Right/wrong feedback (quiz) */
   --color-correct: #1f9d63;
@@ -67,7 +70,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
   color: var(--color-ink);
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
 }
 
 /* Auto-scrolling reviews strip */

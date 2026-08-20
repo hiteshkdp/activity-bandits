@@ -27,8 +27,8 @@ export function BookCard({ book }: { book: Book }) {
         />
       </div>
       <span
-        className="mt-3 inline-block rounded-pill px-2.5 py-0.5 text-[11px] font-bold"
-        style={{ color, backgroundColor: `${color}1f` }}
+        className="mt-3 inline-block rounded-none px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white"
+        style={{ backgroundColor: color }}
       >
         {book.category}
       </span>

@@ -22,8 +22,14 @@ function PlaceholderMark() {
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-20 border-b border-hairline bg-canvas/85 backdrop-blur">
-      <div className="relative mx-auto flex max-w-[88rem] items-center justify-between px-5 py-3.5">
+    <header className="sticky top-0 z-20">
+      {/* Announcement bar (playful top strip) */}
+      <div className="bg-accent text-center text-caption font-bold uppercase tracking-wide text-accent-ink">
+        <div className="mx-auto max-w-[88rem] px-5 py-1.5">
+          🚚 Ships from your local Amazon · Fun for ages 3–12 · New books added often
+        </div>
+      </div>
+      <div className="relative mx-auto flex max-w-[88rem] items-center justify-between border-b border-hairline bg-canvas/90 px-5 py-3.5 backdrop-blur">
         <Link href="/" className="flex items-center gap-2.5">
           {SITE.logo ? (
             // eslint-disable-next-line @next/next/no-img-element

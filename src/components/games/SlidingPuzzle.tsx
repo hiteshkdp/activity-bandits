@@ -123,7 +123,7 @@ export function SlidingPuzzle() {
           </p>
           <Link
             href={`/book/${book.slug}`}
-            className="mt-3 inline-block rounded-lg bg-primary px-6 py-2.5 text-button font-bold text-on-primary hover:bg-primary-strong"
+            className="mt-3 inline-block rounded-pill bg-primary px-6 py-2.5 text-button font-bold text-on-primary hover:bg-primary-strong"
           >
             See the book →
           </Link>

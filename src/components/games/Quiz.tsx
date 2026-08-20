@@ -50,7 +50,7 @@ export function Quiz() {
         <div className="mt-5 flex flex-col items-center gap-3">
           <button
             onClick={restart}
-            className="rounded-lg bg-primary px-6 py-2.5 text-button font-bold text-on-primary hover:bg-primary-strong"
+            className="rounded-pill bg-primary px-6 py-2.5 text-button font-bold text-on-primary hover:bg-primary-strong"
           >
             Play again
           </button>
@@ -108,7 +108,7 @@ export function Quiz() {
       {selected !== null && (
         <button
           onClick={next}
-          className="mt-4 w-full rounded-lg bg-primary px-6 py-3 text-button font-bold text-on-primary hover:bg-primary-strong"
+          className="mt-4 w-full rounded-pill bg-primary px-6 py-3 text-button font-bold text-on-primary hover:bg-primary-strong"
         >
           {idx + 1 >= total ? "See my score" : "Next question"}
         </button>

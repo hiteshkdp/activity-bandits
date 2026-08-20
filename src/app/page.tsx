@@ -64,7 +64,7 @@ export default async function Home({
             <div className="mt-7">
               <a
                 href="#browse"
-                className="inline-block rounded-lg bg-primary px-7 py-3 text-button font-bold text-on-primary shadow-sm transition-colors hover:bg-primary-strong"
+                className="inline-block rounded-pill bg-primary px-7 py-3 text-button font-bold text-on-primary shadow-sm transition-colors hover:bg-primary-strong"
               >
                 Browse all {BOOKS.length} books
               </a>

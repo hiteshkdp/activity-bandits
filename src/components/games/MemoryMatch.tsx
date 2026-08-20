@@ -122,7 +122,7 @@ export function MemoryMatch() {
           </p>
           <button
             onClick={reset}
-            className="mt-3 rounded-lg bg-primary px-6 py-2.5 text-button font-bold text-on-primary hover:bg-primary-strong"
+            className="mt-3 rounded-pill bg-primary px-6 py-2.5 text-button font-bold text-on-primary hover:bg-primary-strong"
           >
             Play again
           </button>

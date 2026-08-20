@@ -182,7 +182,7 @@ export function WordSearch({
         {book && (
           <a
             href={`/go/${book.slug}`}
-            className="mt-4 inline-block rounded-lg bg-primary px-7 py-3 text-button font-bold text-on-primary shadow-sm transition-colors hover:bg-primary-strong"
+            className="mt-4 inline-block rounded-pill bg-primary px-7 py-3 text-button font-bold text-on-primary shadow-sm transition-colors hover:bg-primary-strong"
           >
             Get the book on Amazon →
           </a>
