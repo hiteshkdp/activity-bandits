@@ -28,17 +28,19 @@ export default async function Home({
       <SiteHeader />
 
       {/* Hero */}
-      <section className="border-b border-hairline bg-canvas">
+      <section className="border-b border-hairline bg-surface-soft">
         <h1 className="sr-only">
           Activity Bandits — fun activity books for curious kids, ages 3–12
         </h1>
-        {/* Full-width brand banner */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/hero-banner.jpg"
-          alt="Activity Bandits — fun for curious kids"
-          className="block w-full"
-        />
+        {/* Brand banner — full-width on mobile, height-capped & centred on desktop */}
+        <div className="mx-auto max-w-[80rem] px-0 pt-0 sm:px-5 sm:pt-8">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/hero-banner.jpg"
+            alt="Activity Bandits — fun for curious kids"
+            className="mx-auto block w-full max-w-full rounded-none sm:max-h-[340px] sm:w-auto sm:rounded-xl sm:shadow-sm"
+          />
+        </div>
         {/* CTA + trust badges */}
         <div className="mx-auto flex max-w-[88rem] flex-col items-center gap-4 px-5 py-6 text-center">
           <a
