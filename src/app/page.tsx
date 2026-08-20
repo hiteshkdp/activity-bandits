@@ -4,8 +4,10 @@ import { ReviewsStrip } from "@/components/ReviewsStrip";
 import { TopSellers } from "@/components/TopSellers";
 import { AuthorRow } from "@/components/AuthorRow";
 import { ValueProps } from "@/components/ValueProps";
+import { HeroCovers } from "@/components/HeroCovers";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
+import { SITE } from "@/config/site";
 
 // Real social-proof figures computed from the catalogue.
 const RATED = BOOKS.filter((b) => typeof b.rating === "number");
@@ -28,42 +30,51 @@ export default async function Home({
       <SiteHeader />
 
       {/* Hero */}
-      <section className="border-b border-hairline bg-surface-soft">
-        <h1 className="sr-only">
-          Activity Bandits — fun activity books for curious kids, ages 3–12
-        </h1>
-        {/* Brand banner — full-width on mobile, height-capped & centred on desktop */}
-        <div className="mx-auto max-w-[80rem] px-0 pt-0 sm:px-5 sm:pt-8">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/hero-banner.jpg"
-            alt="Activity Bandits — fun for curious kids"
-            className="mx-auto block w-full max-w-full rounded-none sm:max-h-[340px] sm:w-auto sm:rounded-xl sm:shadow-sm"
-          />
-        </div>
-        {/* CTA + trust badges */}
-        <div className="mx-auto flex max-w-[88rem] flex-col items-center gap-4 px-5 py-6 text-center">
-          <a
-            href="#browse"
-            className="inline-block rounded-pill bg-primary px-7 py-3 text-button font-bold text-on-primary shadow-sm transition-colors hover:bg-primary-strong"
-          >
-            Browse all {BOOKS.length} books
-          </a>
-          <div className="flex flex-wrap justify-center gap-2.5">
-            {AVG_RATING && (
-              <span className="inline-flex items-center gap-1.5 rounded-pill bg-surface-soft px-3 py-1.5 text-body-sm font-bold text-ink">
-                <span className="text-accent">★</span> {AVG_RATING} average
+      <section className="overflow-hidden border-b border-hairline bg-surface-soft">
+        <div className="mx-auto grid max-w-[88rem] items-center gap-10 px-5 py-14 sm:py-20 lg:grid-cols-2">
+          {/* Left: copy + trust + CTA */}
+          <div className="text-center lg:text-left">
+            <span className="text-caption font-bold uppercase tracking-[0.14em] text-primary">
+              Activity books for kids
+            </span>
+            <h1 className="mt-4 text-display-md font-semibold text-ink sm:text-display-lg">
+              Books that keep curious kids busy.
+            </h1>
+            <p className="mx-auto mt-4 max-w-[34rem] text-body-md text-body sm:text-title-sm lg:mx-0">
+              {SITE.tagline}
+            </p>
+
+            {/* Trust badges (real figures) */}
+            <div className="mt-6 flex flex-wrap justify-center gap-2.5 lg:justify-start">
+              {AVG_RATING && (
+                <span className="inline-flex items-center gap-1.5 rounded-pill bg-surface px-3 py-1.5 text-body-sm font-bold text-ink shadow-sm">
+                  <span className="text-accent">★</span> {AVG_RATING} average
+                </span>
+              )}
+              <span className="rounded-pill bg-surface px-3 py-1.5 text-body-sm font-bold text-ink shadow-sm">
+                {BOOKS.length} books
               </span>
-            )}
-            <span className="rounded-pill bg-surface-soft px-3 py-1.5 text-body-sm font-bold text-ink">
-              {BOOKS.length} books
-            </span>
-            <span className="rounded-pill bg-surface-soft px-3 py-1.5 text-body-sm font-bold text-ink">
-              Ships from your local Amazon
-            </span>
-            <span className="rounded-pill bg-surface-soft px-3 py-1.5 text-body-sm font-bold text-ink">
-              Ages 3–12
-            </span>
+              <span className="rounded-pill bg-surface px-3 py-1.5 text-body-sm font-bold text-ink shadow-sm">
+                Ships from your local Amazon
+              </span>
+              <span className="rounded-pill bg-surface px-3 py-1.5 text-body-sm font-bold text-ink shadow-sm">
+                Ages 3–12
+              </span>
+            </div>
+
+            <div className="mt-7">
+              <a
+                href="#browse"
+                className="inline-block rounded-pill bg-primary px-7 py-3 text-button font-bold text-on-primary shadow-sm transition-colors hover:bg-primary-strong"
+              >
+                Browse all {BOOKS.length} books
+              </a>
+            </div>
+          </div>
+
+          {/* Right: fanned cover collage */}
+          <div className="lg:pl-6">
+            <HeroCovers />
           </div>
         </div>
       </section>
