@@ -10,7 +10,7 @@ export function TopSellers() {
   if (books.length === 0) return null;
 
   return (
-    <section className="border-b border-hairline bg-primary/5">
+    <section className="border-b border-hairline bg-surface-soft">
       <div className="mx-auto max-w-[88rem] px-5 py-10 sm:py-12">
         <div className="mb-6 flex items-baseline justify-between">
           <h2 className="text-title-lg font-semibold text-ink">Top sellers</h2>

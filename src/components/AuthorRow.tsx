@@ -21,7 +21,7 @@ export function AuthorRow({
   if (books.length === 0) return null;
 
   return (
-    <section id={anchor} className="border-b border-hairline scroll-mt-20">
+    <section id={anchor} className="border-b border-hairline bg-accent-soft/50 scroll-mt-20">
       <div className="mx-auto max-w-[88rem] px-5 py-10 sm:py-12">
         <div className="mb-1 flex items-baseline justify-between gap-3">
           <h2 className="text-title-lg font-semibold text-ink">{heading}</h2>
