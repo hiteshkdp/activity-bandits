@@ -10,7 +10,7 @@ export function TopSellers() {
   if (books.length === 0) return null;
 
   return (
-    <section className="border-b border-hairline bg-surface-soft/60">
+    <section className="border-b border-hairline bg-primary/5">
       <div className="mx-auto max-w-[88rem] px-5 py-10 sm:py-12">
         <div className="mb-6 flex items-baseline justify-between">
           <h2 className="text-title-lg font-semibold text-ink">Top sellers</h2>
@@ -21,7 +21,7 @@ export function TopSellers() {
             See all →
           </a>
         </div>
-        <div className="grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-3 lg:grid-cols-6">
+        <div className="grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3 lg:grid-cols-6">
           {books.map((b) => (
             <BookCard key={b.slug} book={b} />
           ))}

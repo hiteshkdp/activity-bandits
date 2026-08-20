@@ -32,7 +32,7 @@ export function AuthorRow({
         {subtitle && (
           <p className="mb-6 max-w-[40rem] text-body-md text-body">{subtitle}</p>
         )}
-        <div className="grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        <div className="grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {books.map((b) => (
             <BookCard key={b.slug} book={b} />
           ))}

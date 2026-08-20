@@ -140,7 +140,7 @@ export default async function BookPage({
             <h2 className="mb-4 text-title-md font-bold text-ink">
               More {book.category} books
             </h2>
-            <div className="grid grid-cols-2 gap-x-5 gap-y-10 sm:grid-cols-3 lg:grid-cols-4">
+            <div className="grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3 lg:grid-cols-4">
               {related.map((b) => (
                 <BookCard key={b.slug} book={b} />
               ))}
