@@ -4,7 +4,6 @@ import { ReviewsStrip } from "@/components/ReviewsStrip";
 import { TopSellers } from "@/components/TopSellers";
 import { AuthorRow } from "@/components/AuthorRow";
 import { ValueProps } from "@/components/ValueProps";
-import { HeroArt } from "@/components/HeroArt";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SITE } from "@/config/site";
@@ -31,50 +30,42 @@ export default async function Home({
 
       {/* Hero */}
       <section className="overflow-hidden border-b border-hairline bg-surface-soft">
-        <div className="mx-auto grid max-w-[88rem] items-center gap-10 px-5 py-14 sm:py-20 lg:grid-cols-2">
-          {/* Left: copy + trust + CTA */}
-          <div className="text-center lg:text-left">
-            <span className="text-caption font-bold uppercase tracking-[0.14em] text-primary">
-              Activity books for kids
+        <div className="mx-auto max-w-3xl px-5 py-14 text-center sm:py-20">
+          <span className="text-caption font-bold uppercase tracking-[0.14em] text-primary">
+            Activity books for kids
+          </span>
+          <h1 className="mt-4 text-display-md font-semibold text-ink sm:text-display-lg">
+            Books that keep curious kids busy.
+          </h1>
+          <p className="mx-auto mt-4 max-w-[34rem] text-body-md text-body sm:text-title-sm">
+            {SITE.tagline}
+          </p>
+
+          {/* Trust badges (real figures) */}
+          <div className="mt-6 flex flex-wrap justify-center gap-2.5">
+            {AVG_RATING && (
+              <span className="inline-flex items-center gap-1.5 rounded-pill bg-surface px-3 py-1.5 text-body-sm font-bold text-ink shadow-sm">
+                <span className="text-accent">★</span> {AVG_RATING} average
+              </span>
+            )}
+            <span className="rounded-pill bg-surface px-3 py-1.5 text-body-sm font-bold text-ink shadow-sm">
+              {BOOKS.length} books
             </span>
-            <h1 className="mt-4 text-display-md font-semibold text-ink sm:text-display-lg">
-              Books that keep curious kids busy.
-            </h1>
-            <p className="mx-auto mt-4 max-w-[34rem] text-body-md text-body sm:text-title-sm lg:mx-0">
-              {SITE.tagline}
-            </p>
-
-            {/* Trust badges (real figures) */}
-            <div className="mt-6 flex flex-wrap justify-center gap-2.5 lg:justify-start">
-              {AVG_RATING && (
-                <span className="inline-flex items-center gap-1.5 rounded-pill bg-surface px-3 py-1.5 text-body-sm font-bold text-ink shadow-sm">
-                  <span className="text-accent">★</span> {AVG_RATING} average
-                </span>
-              )}
-              <span className="rounded-pill bg-surface px-3 py-1.5 text-body-sm font-bold text-ink shadow-sm">
-                {BOOKS.length} books
-              </span>
-              <span className="rounded-pill bg-surface px-3 py-1.5 text-body-sm font-bold text-ink shadow-sm">
-                Ships from your local Amazon
-              </span>
-              <span className="rounded-pill bg-surface px-3 py-1.5 text-body-sm font-bold text-ink shadow-sm">
-                Ages 3–12
-              </span>
-            </div>
-
-            <div className="mt-7">
-              <a
-                href="#browse"
-                className="inline-block rounded-pill bg-primary px-7 py-3 text-button font-bold text-on-primary shadow-sm transition-colors hover:bg-primary-strong"
-              >
-                Browse all {BOOKS.length} books
-              </a>
-            </div>
+            <span className="rounded-pill bg-surface px-3 py-1.5 text-body-sm font-bold text-ink shadow-sm">
+              Ships from your local Amazon
+            </span>
+            <span className="rounded-pill bg-surface px-3 py-1.5 text-body-sm font-bold text-ink shadow-sm">
+              Ages 3–12
+            </span>
           </div>
 
-          {/* Right: decorative artwork */}
-          <div className="lg:pl-6">
-            <HeroArt />
+          <div className="mt-7">
+            <a
+              href="#browse"
+              className="inline-block rounded-pill bg-primary px-7 py-3 text-button font-bold text-on-primary shadow-sm transition-colors hover:bg-primary-strong"
+            >
+              Browse all {BOOKS.length} books
+            </a>
           </div>
         </div>
       </section>
