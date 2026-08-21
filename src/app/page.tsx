@@ -4,7 +4,7 @@ import { ReviewsStrip } from "@/components/ReviewsStrip";
 import { TopSellers } from "@/components/TopSellers";
 import { AuthorRow } from "@/components/AuthorRow";
 import { ValueProps } from "@/components/ValueProps";
-import { HeroCovers } from "@/components/HeroCovers";
+import { HeroArt } from "@/components/HeroArt";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SITE } from "@/config/site";
@@ -72,9 +72,9 @@ export default async function Home({
             </div>
           </div>
 
-          {/* Right: fanned cover collage */}
+          {/* Right: decorative artwork */}
           <div className="lg:pl-6">
-            <HeroCovers />
+            <HeroArt />
           </div>
         </div>
       </section>
