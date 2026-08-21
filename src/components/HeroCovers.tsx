@@ -15,7 +15,10 @@ export function HeroCovers() {
   const mid = (books.length - 1) / 2;
 
   return (
-    <div className="flex items-center justify-center py-4" aria-hidden>
+    <div
+      className="flex max-w-full items-center justify-center overflow-hidden py-4"
+      aria-hidden
+    >
       {books.map((b, i) => {
         const offset = i - mid;
         return (
@@ -25,7 +28,7 @@ export function HeroCovers() {
             src={coverUrl(b)}
             alt=""
             loading="eager"
-            className="h-44 w-auto rounded-lg object-contain shadow-[0_10px_30px_rgba(20,30,50,0.22)] transition-transform duration-300 hover:!rotate-0 hover:!translate-y-[-6px] sm:h-52 lg:h-60 -ml-8 first:ml-0 sm:-ml-10"
+            className="-ml-9 h-28 w-auto rounded-lg object-contain shadow-[0_10px_30px_rgba(20,30,50,0.22)] transition-transform duration-300 first:ml-0 hover:!rotate-0 hover:!translate-y-[-6px] sm:-ml-10 sm:h-52 lg:h-60"
             style={{
               transform: `rotate(${offset * 7}deg) translateY(${Math.abs(offset) * 10}px)`,
               zIndex: 10 - Math.abs(offset),
