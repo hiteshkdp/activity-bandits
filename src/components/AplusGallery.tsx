@@ -10,8 +10,8 @@ export function AplusGallery({ slug }: { slug: string }) {
   if (images.length === 0) return null;
 
   return (
-    <section className="mt-14 border-t border-hairline pt-10">
-      <h2 className="mb-6 text-center text-title-md font-semibold text-ink">
+    <section className="mt-14 border-t border-mute pt-10">
+      <h2 className="mb-6 text-center text-cardlg font-semibold text-ink">
         More about this book
       </h2>
       <div className="mx-auto flex max-w-[680px] flex-col items-center gap-4">
@@ -22,7 +22,7 @@ export function AplusGallery({ slug }: { slug: string }) {
             src={src}
             alt=""
             loading="lazy"
-            className="max-w-full rounded-lg border border-hairline"
+            className="max-w-full rounded-img border border-mute"
           />
         ))}
       </div>

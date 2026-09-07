@@ -1,33 +1,30 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
+import { GameShell } from "@/components/games/GameShell";
 import { WouldYouRatherFootball } from "@/components/games/WouldYouRatherFootball";
 
 export const metadata: Metadata = {
   title: "Would You Rather? Football — Free Kids Game",
   description:
-    "Fun football would-you-rather questions for kids. Pick A or B — there are no wrong answers!",
+    "Five tricky football choices — which would you pick? A free would-you-rather game for kids, with no wrong answers.",
 };
 
 export default function WouldYouRatherFootballPage() {
   return (
     <>
       <SiteHeader />
-      <main className="mx-auto w-full max-w-[40rem] flex-1 px-5 py-10">
-        <Link href="/play" className="text-body-sm font-semibold text-muted hover:text-primary">
-          ← All games
-        </Link>
-        <h1 className="mt-4 text-title-lg font-semibold text-ink">
-          Would You Rather? Football
-        </h1>
-        <p className="mb-6 mt-1 text-body-md text-body">
-          Five tricky football choices — pick your favourite. There are no wrong
-          answers, just fun!
-        </p>
-        <WouldYouRatherFootball />
+      <main className="flex flex-auto flex-col">
+        <GameShell
+          kicker="Choices · Free game"
+          title="Would You Rather? Football"
+          lead="Five tricky football choices — which would you pick? No wrong answers."
+          width="mid"
+        >
+          <WouldYouRatherFootball />
+        </GameShell>
       </main>
-      <SiteFooter />
+      <SiteFooter variant="compact" />
     </>
   );
 }

@@ -1,135 +1,90 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
-import { getBook } from "@/data/books";
-import { coverUrl } from "@/lib/amazon";
+import { CrossSell } from "@/components/games/GameShell";
 import { WYR_FOOTBALL_QUESTIONS, WYR_FOOTBALL_BOOK } from "@/data/games";
 
+/** The one transition used across the design system. */
+const TRANSITION =
+  "transition-[background-color,color,border-color,transform] duration-[140ms] ease-[ease]";
+
+const PANEL =
+  `flex cursor-pointer items-center rounded-ui border px-6 py-8 text-left text-cardlg font-semibold ${TRANSITION} hover:-translate-y-0.5`;
+
+/**
+ * Five football "would you rather" pairs. Tapping a panel advances straight to
+ * the next question; after the fifth pick the run is replayed as a recap list
+ * above the book cross-sell.
+ */
 export function WouldYouRatherFootball() {
   const [idx, setIdx] = useState(0);
-  const [picked, setPicked] = useState<"a" | "b" | null>(null);
-  const [finished, setFinished] = useState(false);
+  const [chosen, setChosen] = useState<string[]>([]);
 
   const total = WYR_FOOTBALL_QUESTIONS.length;
-  const q = WYR_FOOTBALL_QUESTIONS[idx];
-  const book = getBook(WYR_FOOTBALL_BOOK);
+  const done = idx >= total;
+  const question = WYR_FOOTBALL_QUESTIONS[done ? total - 1 : idx];
 
-  const pick = (choice: "a" | "b") => {
-    if (picked !== null) return;
-    setPicked(choice);
-  };
-
-  const next = () => {
-    if (idx + 1 >= total) {
-      setFinished(true);
-    } else {
-      setIdx((n) => n + 1);
-      setPicked(null);
-    }
+  const choose = (key: "a" | "b") => {
+    setChosen((list) => [...list, WYR_FOOTBALL_QUESTIONS[idx][key]]);
+    setIdx((n) => n + 1);
   };
 
   const restart = () => {
     setIdx(0);
-    setPicked(null);
-    setFinished(false);
+    setChosen([]);
   };
 
-  if (finished) {
+  if (done) {
     return (
-      <div className="mx-auto max-w-[32rem] rounded-xl border border-hairline bg-surface-soft p-6 text-center">
-        <p className="text-5xl" aria-hidden>
-          ⚽
-        </p>
-        <p className="mt-2 text-title-lg font-bold text-ink">
-          Tough choices!
-        </p>
-        <p className="mt-1 text-body-md text-body">
-          Want hundreds more football would-you-rathers?
-        </p>
-
-        {book && (
-          <div className="mt-5 rounded-xl border border-hairline bg-surface p-4 text-left shadow-sm sm:flex sm:items-center sm:gap-4">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={coverUrl(book)}
-              alt={`${book.title} cover`}
-              className="mx-auto h-28 w-auto rounded object-contain shadow-sm sm:mx-0"
-            />
-            <div className="mt-3 sm:mt-0">
-              <p className="text-title-sm font-bold text-ink">{book.title}</p>
-              <p className="mt-1 text-body-sm text-body">
-                Packed with hilarious football would-you-rather questions for
-                kids.
-              </p>
-              <a
-                href={`/go/${book.slug}`}
-                className="mt-3 inline-block rounded-pill bg-action px-6 py-2.5 text-button font-bold text-on-action shadow-sm hover:bg-action-strong"
-              >
-                Buy on Amazon →
-              </a>
+      <div className="flex flex-col gap-5">
+        <h2 className="text-h2 font-semibold">Your picks</h2>
+        <div className="flex flex-col gap-2.5">
+          {chosen.map((choice, i) => (
+            <div
+              key={`${i}-${choice}`}
+              className="flex items-baseline gap-3 rounded-ui bg-canvas-soft px-5 py-4"
+            >
+              <span className="flex-none text-label font-medium uppercase text-body-mid">
+                {i + 1}
+              </span>
+              <span className="text-copy font-semibold text-ink">{choice}</span>
             </div>
-          </div>
-        )}
-
-        <button
-          onClick={restart}
-          className="mt-5 rounded-pill bg-primary px-6 py-2.5 text-button font-bold text-on-primary hover:bg-primary-strong"
-        >
-          Play again
-        </button>
+          ))}
+        </div>
+        <CrossSell
+          heading="200 more choices in the book."
+          blurb="Would You Rather — Football Edition, ages 6–12."
+          slug={WYR_FOOTBALL_BOOK}
+          onRestart={restart}
+        />
       </div>
     );
   }
 
   return (
-    <div className="mx-auto max-w-[32rem]">
-      <div className="mb-2 text-body-sm font-semibold text-muted">
+    <div className="flex flex-col gap-5">
+      <span className="text-label font-medium uppercase text-body-mid">
         Question {idx + 1} of {total}
-      </div>
+      </span>
 
-      <p className="text-center text-title-md font-bold text-ink">
-        Would you rather…
-      </p>
-
-      <div className="mt-4 flex flex-col items-stretch gap-3">
-        {(["a", "b"] as const).map((choice) => {
-          const isPicked = picked === choice;
-          let cls =
-            "border-hairline bg-surface text-ink hover:border-primary hover:-translate-y-0.5";
-          if (picked !== null) {
-            cls = isPicked
-              ? "border-primary bg-accent-soft text-ink"
-              : "border-hairline bg-surface text-muted";
-          }
-          return (
-            <button
-              key={choice}
-              onClick={() => pick(choice)}
-              disabled={picked !== null}
-              className={`rounded-xl border px-5 py-5 text-center text-body-md font-semibold shadow-sm transition-all ${cls}`}
-            >
-              {q[choice]}
-              {isPicked && <span className="ml-2">✓</span>}
-            </button>
-          );
-        })}
-
-        {picked === null && (
-          <p className="text-center text-caption font-semibold text-muted">
-            There are no wrong answers — just pick your favourite!
-          </p>
-        )}
-      </div>
-
-      {picked !== null && (
+      <div className="grid gap-4 [grid-template-columns:repeat(auto-fit,minmax(260px,1fr))]">
         <button
-          onClick={next}
-          className="mt-4 w-full rounded-pill bg-primary px-6 py-3 text-button font-bold text-on-primary hover:bg-primary-strong"
+          type="button"
+          onClick={() => choose("a")}
+          className={`${PANEL} min-h-[180px] border-mute bg-canvas-soft text-ink hover:border-ink`}
         >
-          {idx + 1 >= total ? "Finish" : "Next question"}
+          {question.a}
         </button>
-      )}
+        <button
+          type="button"
+          onClick={() => choose("b")}
+          className={`${PANEL} min-h-[180px] border-ink bg-ink text-on-primary`}
+        >
+          {question.b}
+        </button>
+      </div>
+
+      <p className="text-nav text-body-mid">Tap the one you&apos;d choose.</p>
     </div>
   );
 }

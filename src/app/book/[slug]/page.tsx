@@ -7,6 +7,7 @@ import { BookCard } from "@/components/BookCard";
 import { AplusGallery } from "@/components/AplusGallery";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
+import { Badge, BTN_PRIMARY } from "@/components/ui";
 
 /** Pre-render a static page for every book at build time. */
 export function generateStaticParams() {
@@ -44,6 +45,13 @@ export async function generateMetadata({
   };
 }
 
+/** "More puzzle books" / "More travel books" — matches the design's wording. */
+function relatedHeading(category: string): string {
+  const word =
+    category === "Puzzles and Words" ? "puzzle" : category.toLowerCase();
+  return `More ${word} books`;
+}
+
 export default async function BookPage({
   params,
   searchParams,
@@ -55,8 +63,8 @@ export default async function BookPage({
   const book = getBook(slug);
   if (!book) notFound();
 
-  // Forward TikTok UTM params (utm_source/utm_content/...) onto the buy link so
-  // the redirect can attribute the conversion to the video that drove it.
+  // Forward TikTok UTM params onto the buy link so the redirect can attribute
+  // the conversion to the video that drove it.
   const sp = await searchParams;
   const forwarded = new URLSearchParams();
   for (const [key, value] of Object.entries(sp)) {
@@ -76,77 +84,93 @@ export default async function BookPage({
     <>
       <SiteHeader />
 
-      <main className="mx-auto w-full max-w-5xl flex-1 px-5 py-8">
-        <Link href="/" className="text-body-sm font-semibold text-muted hover:text-primary">
-          ← All books
-        </Link>
+      <main className="flex-auto">
+        <section className="bg-canvas px-6 pb-16 pt-12">
+          <div className="mx-auto max-w-[1280px]">
+            <Link
+              href="/#browse"
+              className="text-nav text-body hover:underline"
+            >
+              ← All books
+            </Link>
 
-        <div className="mt-6 grid gap-8 sm:grid-cols-[minmax(0,18rem)_1fr] sm:items-start">
-          {/* Cover */}
-          <div className="flex aspect-[4/5] w-full max-w-[18rem] items-center justify-center overflow-hidden rounded-xl border border-hairline bg-surface-soft p-3 shadow-md">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={coverUrl(book)}
-              alt={`${book.title} cover`}
-              className="max-h-full max-w-full rounded object-contain shadow-sm"
-            />
+            <div className="mt-6 grid items-start gap-12 [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]">
+              {/* Cover panel */}
+              <div className="flex justify-center rounded-ui bg-canvas-soft p-8">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={coverUrl(book)}
+                  alt={`${book.title} cover`}
+                  loading="eager"
+                  className="w-[min(360px,100%)] rounded-img"
+                />
+              </div>
+
+              {/* Details */}
+              <div className="flex flex-col items-start gap-5">
+                <div className="flex flex-wrap gap-2">
+                  <Badge>{book.category}</Badge>
+                  <Badge>{book.ages}</Badge>
+                  <Badge>Paperback</Badge>
+                </div>
+
+                <h1 className="text-h2 text-pretty">{book.title}</h1>
+                <p className="text-nav text-body-mid">by {book.author}</p>
+                <p className="max-w-[48ch] text-lead text-pretty text-body">
+                  {book.blurb}
+                </p>
+
+                <a href={goHref} className={BTN_PRIMARY}>
+                  Buy on Amazon
+                </a>
+                <p className="text-caption text-body-mid">
+                  You&apos;ll be sent to your local Amazon store automatically.
+                </p>
+
+                {book.features && book.features.length > 0 && (
+                  <div className="flex w-full flex-col gap-3 border-t border-mute pt-5">
+                    <span className="text-label font-medium uppercase text-ink">
+                      What&apos;s inside
+                    </span>
+                    <div className="flex flex-wrap gap-2">
+                      {book.features.map((f) => (
+                        <span
+                          key={f}
+                          className="rounded-pill border border-mute bg-canvas px-3 py-1 text-nav text-body"
+                        >
+                          {f}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* The book's own Amazon A+ brand content, when we have it */}
+            <AplusGallery slug={book.slug} />
           </div>
+        </section>
 
-          {/* Details */}
-          <div className="flex flex-col gap-4">
-            <div className="flex flex-wrap gap-2">
-              <span className="rounded-md bg-accent-soft px-2.5 py-1 text-caption font-bold text-ink">
-                {book.category}
-              </span>
-              <span className="rounded-md border border-hairline px-2.5 py-1 text-caption font-bold text-muted">
-                {book.ages}
-              </span>
-              <span className="rounded-md border border-hairline px-2.5 py-1 text-caption font-bold text-muted">
-                Paperback
-              </span>
-            </div>
-
-            <div>
-              <h1 className="text-title-lg font-bold text-ink">{book.title}</h1>
-              <p className="mt-1 text-body-sm text-muted">by {book.author}</p>
-            </div>
-
-            <p className="text-body-md leading-relaxed text-body">{book.blurb}</p>
-
-            {/* Geo-aware buy button → /go/<slug> route handler */}
-            <div className="mt-2">
-              <a
-                href={goHref}
-                className="inline-flex items-center justify-center rounded-pill bg-action px-7 py-3.5 text-button font-bold text-on-action shadow-sm transition-colors hover:bg-action-strong"
-              >
-                Buy on Amazon →
-              </a>
-              <p className="mt-2 text-caption text-muted">
-                You&apos;ll be sent to your local Amazon store automatically.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* A+ content from Amazon (the book's own brand content) */}
-        <AplusGallery slug={book.slug} />
-
-        {/* Related books */}
+        {/* More like this */}
         {related.length > 0 && (
-          <section className="mt-14">
-            <h2 className="mb-4 text-title-md font-bold text-ink">
-              More {book.category} books
-            </h2>
-            <div className="grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3 lg:grid-cols-4">
-              {related.map((b) => (
-                <BookCard key={b.slug} book={b} />
-              ))}
+          <section className="bg-canvas-soft px-6 py-16">
+            <div className="mx-auto max-w-[1280px]">
+              <p className="mb-3 text-label font-medium uppercase text-ink">
+                More like this
+              </p>
+              <h2 className="mb-8 text-h2">{relatedHeading(book.category)}</h2>
+              <div className="grid items-stretch gap-4 [grid-template-columns:repeat(auto-fill,minmax(240px,1fr))]">
+                {related.map((b) => (
+                  <BookCard key={b.slug} book={b} />
+                ))}
+              </div>
             </div>
           </section>
         )}
       </main>
 
-      <SiteFooter />
+      <SiteFooter variant="compact" />
     </>
   );
 }

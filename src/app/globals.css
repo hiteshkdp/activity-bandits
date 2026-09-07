@@ -1,94 +1,122 @@
 @import "tailwindcss";
 
+/*
+ * Activity Bandits design system.
+ * Warm cream/coffee palette, one orange CTA, one blue accent for section
+ * eyebrow pills. No shadows anywhere — elevation comes from surface contrast.
+ */
 @theme {
-  /* === Clean + warm palette (brand teal/yellow from the logo) === */
-  --color-canvas: #ffffff;          /* clean white page */
-  --color-surface: #ffffff;         /* cards */
-  --color-surface-soft: #f6f2ea;    /* warm cream sections / cover backdrop */
-  --color-ink: #232a33;             /* charcoal headings / strong text */
-  --color-body: #4b5563;            /* body text */
-  --color-muted: #97a0ab;           /* secondary text */
-  --color-hairline: #ece7dd;        /* warm light borders */
+  /* === Colours === */
+  --color-canvas: #fffefb;          /* page background (warm off-white) */
+  --color-canvas-soft: #f8f4f0;     /* cards, inset bands, badge pills */
+  --color-ink: #201515;             /* headings, primary text, dark bands */
+  --color-ink-soft: #36342e;        /* dark-button hover */
+  --color-body: #605d52;            /* body copy */
+  --color-body-mid: #939084;        /* metadata, captions, fine print */
+  --color-mute: #c5c0b1;            /* hairlines, on-dark secondary text */
+  --color-primary: #ff4f00;         /* every primary CTA */
+  --color-primary-hover: #e64700;
+  --color-on-primary: #fffefb;
+  --color-accent-blue: #0071e3;     /* section eyebrow pills only */
+  --color-progress-track: #e6ddd6;  /* quiz progress bar track */
+  --color-hero-white: #ffffff;      /* hero band (pure white for the canvas fx) */
 
-  /* Brand */
-  --color-primary: #14b3c2;         /* teal — buttons, links, active */
-  --color-primary-strong: #0e96a3;  /* hover */
-  --color-on-primary: #ffffff;
-  --color-accent: #fbc02d;          /* sunny yellow accent (logo brush) */
-  --color-accent-soft: #fff3cf;
-  --color-accent-ink: #4a3800;      /* dark text on yellow (price-tag badges) */
-  --color-navy: #1f2450;            /* deep navy — footer / bold blocks */
-  --color-navy-soft: #2b3170;
-  --color-action: #f97316;          /* orange — the "buy" action (LEGO-style) */
-  --color-action-strong: #ea680c;   /* hover */
-  --color-on-action: #ffffff;
-
-  /* Right/wrong feedback (quiz) */
-  --color-correct: #1f9d63;
-  --color-correct-soft: #e6f6ee;
-  --color-wrong: #d64545;
-  --color-wrong-soft: #fbeaea;
-
-  /* === Fonts === */
-  --font-display: var(--font-poppins), "Trebuchet MS", -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-body: var(--font-nunito), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-
-  /* === Border radius (clean, moderate) === */
-  --radius-sm: 8px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
-  --radius-xl: 20px;
+  /* === Radius === */
+  --radius-img: 6px;                /* images + inputs */
+  --radius-ui: 12px;                /* buttons, cards, chips (signature) */
+  --radius-logo: 8px;
   --radius-pill: 9999px;
 
   /* === Type scale === */
-  --text-display-lg: 3rem;
-  --text-display-lg--line-height: 1.08;
-  --text-display-md: 2.25rem;
-  --text-display-md--line-height: 1.12;
-  --text-display-sm: 1.75rem;
-  --text-display-sm--line-height: 1.18;
-  --text-title-lg: 1.5rem;
-  --text-title-lg--line-height: 1.25;
-  --text-title-md: 1.125rem;
-  --text-title-md--line-height: 1.3;
-  --text-title-sm: 1rem;
-  --text-title-sm--line-height: 1.35;
-  --text-body-md: 0.9375rem;
-  --text-body-md--line-height: 1.6;
-  --text-body-sm: 0.8125rem;
-  --text-body-sm--line-height: 1.5;
-  --text-button: 0.9375rem;
-  --text-button--line-height: 1;
-  --text-caption: 0.75rem;
-  --text-caption--line-height: 1.4;
+  --text-hero: clamp(40px, 7vw, 56px);
+  --text-hero--line-height: 1;
+  --text-hero--font-weight: 500;
+
+  --text-h2: clamp(32px, 5vw, 48px);
+  --text-h2--line-height: 1.05;
+  --text-h2--font-weight: 500;
+
+  --text-gameh1: clamp(34px, 6vw, 48px);
+  --text-gameh1--line-height: 1.07;
+  --text-gameh1--letter-spacing: -0.28px;
+  --text-gameh1--font-weight: 600;
+
+  --text-cardlg: 24px;              /* large card title */
+  --text-cardlg--line-height: 30px;
+  --text-cardlg--letter-spacing: -0.6px;
+
+  --text-cardsm: 20px;              /* grid card title */
+  --text-cardsm--line-height: 25px;
+  --text-cardsm--letter-spacing: -0.5px;
+
+  --text-lead: 20px;
+  --text-lead--line-height: 30px;
+  --text-lead--letter-spacing: -0.2px;
+
+  --text-copy: 18px;                /* body */
+  --text-copy--line-height: 27px;
+
+  --text-btn: 18px;
+  --text-btn--line-height: 27px;
+
+  --text-nav: 16px;                 /* secondary body / nav */
+  --text-nav--line-height: 24px;
+
+  --text-caption: 14px;             /* metadata */
+  --text-caption--line-height: 21px;
+
+  --text-eyebrow: 14px;             /* uppercase pill */
+  --text-eyebrow--line-height: 1;
+  --text-eyebrow--letter-spacing: 0.2px;
+
+  --text-label: 14px;               /* uppercase kicker: "BOOK 1", footer heads */
+  --text-label--line-height: 14px;
+  --text-label--letter-spacing: 1px;
+
+  --text-chip: 14.4px;              /* filter chip */
+  --text-chip--line-height: 14.4px;
+  --text-chip--letter-spacing: 0.144px;
+
+  /* === Font — Apple system stack, no web font loaded === */
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui,
+    "Helvetica Neue", sans-serif;
 }
 
-/* === Base === */
-body {
-  background-color: var(--color-canvas);
-  color: var(--color-body);
-  font-family: var(--font-body);
-}
+/*
+ * === Base ===
+ * These MUST live in @layer base. Unlayered CSS wins over every Tailwind
+ * utility regardless of specificity, so an unlayered `h2 { color: ink }` would
+ * make `text-on-primary` headings invisible on the dark ink bands.
+ */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-display);
-  color: var(--color-ink);
-  letter-spacing: -0.02em;
-}
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
 
-/* Auto-scrolling reviews strip */
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-.marquee-track {
-  display: flex;
-  width: max-content;
-  animation: marquee 40s linear infinite;
-}
-.marquee-track:hover {
-  animation-play-state: paused;
-}
-@media (prefers-reduced-motion: reduce) {
-  .marquee-track { animation: none; }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: var(--color-ink);
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
 }

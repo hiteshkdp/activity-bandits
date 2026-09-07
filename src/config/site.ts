@@ -22,6 +22,12 @@ export const SITE = {
   tagline: "Fun activity & puzzle books for kids — tap any cover to grab it from your local Amazon store.",
 
   /**
+   * ⚠️ PLACEHOLDER — replace with your real inbox before going live.
+   * Used by the Contact page (the mailto button and the message form).
+   */
+  contactEmail: "hello@example.com",
+
+  /**
    * Canonical site URL. Update to your real domain once purchased
    * (e.g. "https://yourpenname.com"). Used for OpenGraph/canonical URLs.
    */

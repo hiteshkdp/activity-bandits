@@ -35,8 +35,10 @@ export type Book = {
   category: string;
   /** Age bucket used by the browse filters (e.g. "Ages 4-8"). */
   ages: string;
-  /** Optional star rating for social proof (e.g. 4.6). */
+  /** Optional star rating for social proof (e.g. 4.6). Not shown on the site. */
   rating?: number;
+  /** Optional "What's inside" chips on the book page. Omit to hide the block. */
+  features?: string[];
   /** Optional explicit cover. Omit to auto-derive from the ASIN. */
   cover?: string;
   /** Optional ASIN to pull the Amazon cover from (use a PRINT ASIN). */
@@ -62,6 +64,8 @@ export const BOOKS: Book[] = [
   },
   {
     slug: "airplane-activity-book-for-kids-ages-8-12",
+    features: ["Scavenger hunt", "Mazes", "Word search", "Crosswords"],
+    cover: "/covers/airplane-activity-book-for-kids-ages-8-12.jpg",
     title: "Airplane Activity Book For Kids Ages 8-12",
     fullTitle: "Airplane Activity Book For Kids Ages 8-12: Perfect For Travel Trips | Includes Mazes Word Searches, Sudoku, Crosswords And More!",
     author: "Activity Bandits",
@@ -86,6 +90,8 @@ export const BOOKS: Book[] = [
   },
   {
     slug: "ancient-egypt-activity-puzzle-book-for-kids",
+    features: ["Mazes", "Word search", "Facts", "Colouring"],
+    cover: "/covers/ancient-egypt-activity-puzzle-book-for-kids.jpg",
     title: "Ancient Egypt Activity & Puzzle Book For Kids",
     fullTitle: "Ancient Egypt Activity Book For Kids: Includes Mazes Word Searches, Puzzles, Crosswords, Facts AND MORE!",
     author: "Activity Bandits",
@@ -408,6 +414,8 @@ export const BOOKS: Book[] = [
   },
   {
     slug: "football-word-search-book-for-kids",
+    features: ["Players", "World Cup", "La Liga", "Premier League", "Stadiums"],
+    cover: "/covers/football-word-search-book-for-kids.jpg",
     title: "Football Word Search Book For Kids",
     fullTitle: "Football Word Search Book For Kids: Perfect Football Activity Book Includes Players, Stadiums, Stats And MORE!",
     author: "Activity Bandits",
@@ -444,6 +452,8 @@ export const BOOKS: Book[] = [
   },
   {
     slug: "guess-the-football-player-for-kids-for-ages-6-12",
+    features: ["100 players", "Clues", "Silhouettes", "Stats"],
+    cover: "/covers/guess-the-football-player-for-kids-for-ages-6-12.jpg",
     title: "Guess The Football Player For Kids For Ages 6-12",
     fullTitle: "Guess The Football Player For Kids For Ages 6-12: Guess 100 Players | The Ideal Football Activity Book",
     author: "Activity Bandits",
@@ -800,6 +810,8 @@ export const BOOKS: Book[] = [
   },
   {
     slug: "would-you-rather-football-book-for-kids-ages-6-12",
+    features: ["200 choices", "Two players", "Road-trip ready"],
+    cover: "/covers/would-you-rather-football-book-for-kids-ages-6-12.jpg",
     title: "Would You Rather Football Book For Kids Ages 6-12",
     fullTitle: "Would You Rather Football Book For Kids Ages 6-12: Football Edition: 200 Hilarious And Mind-Bending Choices | Perfect Football Activity For Footie-Mad Kids!",
     author: "Activity Bandits",
@@ -848,6 +860,8 @@ export const BOOKS: Book[] = [
   },
   {
     slug: "bravery-in-the-big-game",
+    features: ["Read-along", "Ages 5-7", "Illustrated"],
+    cover: "/covers/bravery-in-the-big-game.jpg",
     title: "Bravery In The Big Game",
     fullTitle: "Bravery In The Big Game: Football Story Book For Ages 5-7 (Harry Kicker Series)",
     author: "Harry Kicker",

@@ -1,43 +1,47 @@
 import type { Metadata } from "next";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
+import { ContactForm } from "@/components/ContactForm";
+import { BTN_PRIMARY } from "@/components/ui";
 import { SITE } from "@/config/site";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: `Get in touch with ${SITE.authorName}.`,
+  description:
+    "Questions, feedback or just want to say hi? Get in touch with Activity Bandits.",
 };
 
 export default function ContactPage() {
   return (
     <>
       <SiteHeader />
-      <main className="mx-auto w-full max-w-[44rem] flex-1 px-5 py-12">
-        <h1 className="text-display-sm font-bold text-ink sm:text-display-md">
-          Contact
-        </h1>
-        <div className="mt-6 space-y-4 text-body-md leading-relaxed text-body">
-          <p>
-            Questions, feedback or just want to say hi? We&apos;d love to hear from
-            you.
-          </p>
-          {/* TODO: Replace with your real contact email / form. */}
-          <p>
-            Email us at{" "}
-            <a
-              href="mailto:hello@example.com"
-              className="font-bold text-primary hover:text-primary-strong"
-            >
-              hello@example.com
-            </a>
-          </p>
-          <p className="text-body-sm text-muted">
-            (Placeholder address — tell me the email you want here, or I can wire up
-            a proper contact form.)
-          </p>
-        </div>
+
+      <main className="flex-auto">
+        <section className="bg-canvas px-6 py-16">
+          <div className="mx-auto grid max-w-[1280px] items-start gap-12 [grid-template-columns:repeat(auto-fit,minmax(300px,1fr))]">
+            <div className="flex flex-col items-start gap-6">
+              <p className="text-label font-medium uppercase text-ink">
+                Contact
+              </p>
+              <h1 className="text-hero">Contact</h1>
+              <p className="max-w-[40ch] text-lead text-pretty text-body">
+                Questions, feedback or just want to say hi? We&apos;d love to
+                hear from you.
+              </p>
+              <a
+                href={`mailto:${SITE.contactEmail}`}
+                className={BTN_PRIMARY}
+              >
+                Email us at {SITE.contactEmail}
+              </a>
+            </div>
+
+            <ContactForm />
+          </div>
+        </section>
       </main>
-      <SiteFooter />
+
+      <SiteFooter variant="compact" />
     </>
   );
 }

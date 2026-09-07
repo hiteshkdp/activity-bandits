@@ -1,53 +1,68 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { SITE } from "@/config/site";
-import { CATEGORIES } from "@/data/books";
-import { SiteNav } from "@/components/SiteNav";
+import { BTN_PRIMARY } from "@/components/ui";
 
-/** Placeholder "bandit mask" mark — swapped out once SITE.logo is set. */
-function PlaceholderMark() {
-  return (
-    <span
-      aria-hidden
-      className="flex h-9 w-9 items-center justify-center rounded-pill bg-primary text-white"
-    >
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-        <path
-          d="M2 9c0-1 1-2 3-2h14c2 0 3 1 3 2 0 1-.4 2-1.2 2.7C22 14 20 16 17 16c-2.2 0-3.6-1-4.4-2.2-.3-.5-.9-.5-1.2 0C10.6 15 9.2 16 7 16c-3 0-5-2-5.8-4.3C.4 11 0 10 2 9Z"
-          fill="currentColor"
-        />
-      </svg>
-    </span>
-  );
-}
+const LINKS = [
+  { label: "Books", href: "/#browse" },
+  { label: "Reading books", href: "/#series" },
+  { label: "Free fun", href: "/play" },
+  { label: "About us", href: "/about" },
+  { label: "Contact", href: "/contact" },
+];
 
+/** Sticky top nav: logo + wordmark, links, persistent orange Browse CTA. */
 export function SiteHeader() {
+  const pathname = usePathname();
+
   return (
-    <header className="sticky top-0 z-20">
-      {/* Announcement bar (playful top strip) */}
-      <div className="bg-accent text-center text-caption font-bold uppercase tracking-wide text-accent-ink">
-        <div className="mx-auto max-w-[88rem] px-5 py-1.5">
-          🚚 Ships from your local Amazon · Fun for ages 3–12 · New books added often
-        </div>
-      </div>
-      <div className="relative mx-auto flex max-w-[88rem] items-center justify-between border-b border-hairline bg-canvas/90 px-5 py-3.5 backdrop-blur">
-        <Link href="/" className="flex items-center gap-2.5">
-          {SITE.logo ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={SITE.logo}
-              alt={SITE.authorName}
-              className="h-11 w-11 rounded-lg object-cover shadow-sm"
-            />
-          ) : (
-            <PlaceholderMark />
-          )}
-          <span className="font-display text-title-md font-bold text-ink">
-            {SITE.authorName}
-          </span>
+    <nav className="sticky top-0 z-20 border-b border-mute bg-canvas px-6 py-3">
+      {/* On narrow screens the links drop to their own full-width row so they
+          flow left, instead of being squeezed into a column beside the logo. */}
+      <div className="mx-auto flex max-w-[1280px] flex-wrap items-center gap-x-6 gap-y-3">
+        <Link
+          href="/"
+          className="flex items-center gap-2.5 text-cardsm font-bold text-ink hover:underline"
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={SITE.logo}
+            alt=""
+            width={34}
+            height={34}
+            className="h-[34px] w-[34px] rounded-logo"
+          />
+          <span>{SITE.authorName}</span>
         </Link>
 
-        <SiteNav categories={CATEGORIES} />
+        <div className="order-3 flex w-full flex-wrap items-center gap-x-5 gap-y-2 sm:order-2 sm:w-auto sm:flex-1">
+          {LINKS.map((l) => {
+            const active = l.href.startsWith("/#")
+              ? pathname === "/"
+              : pathname === l.href;
+            return (
+              <Link
+                key={l.href}
+                href={l.href}
+                className={`text-nav text-ink hover:underline ${
+                  active ? "font-semibold" : ""
+                }`}
+              >
+                {l.label}
+              </Link>
+            );
+          })}
+        </div>
+
+        <Link
+          href="/#browse"
+          className={`${BTN_PRIMARY} order-2 ml-auto sm:order-3 sm:ml-0`}
+        >
+          Browse books
+        </Link>
       </div>
-    </header>
+    </nav>
   );
 }

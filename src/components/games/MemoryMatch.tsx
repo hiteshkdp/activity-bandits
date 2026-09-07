@@ -1,14 +1,29 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { getBook } from "@/data/books";
 import { MEMORY_SLUGS } from "@/data/games";
 import { coverUrl } from "@/lib/amazon";
+import { Badge, BTN_OUTLINE } from "@/components/ui";
+import { CrossSell } from "@/components/games/GameShell";
+
+/** How long the two open cards stay up before the turn resolves. */
+const MATCH_MS = 420;
+const MISS_MS = 780;
+
+/** The board is built from real covers, so it cross-sells the first of them. */
+const CROSS_SELL_SLUG = MEMORY_SLUGS[0];
 
 type Card = { id: number; slug: string };
 
-function shuffle<T>(arr: T[]): T[] {
-  const a = [...arr];
+/** Deterministic deck — every slug twice, in order. Safe for the first paint. */
+function orderedDeck(slugs: string[]): Card[] {
+  return slugs.flatMap((slug) => [slug, slug]).map((slug, id) => ({ id, slug }));
+}
+
+/** Fisher–Yates. Card ids travel with their card, so keys stay stable. */
+function shuffled(deck: Card[]): Card[] {
+  const a = [...deck];
   for (let i = a.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [a[i], a[j]] = [a[j], a[i]];
@@ -16,96 +31,123 @@ function shuffle<T>(arr: T[]): T[] {
   return a;
 }
 
-function buildDeck(slugs: string[]): Card[] {
-  const pairs = slugs.flatMap((slug) => [slug, slug]);
-  return shuffle(pairs).map((slug, id) => ({ id, slug }));
-}
-
 export function MemoryMatch() {
-  const slugs = useMemo(
-    () => MEMORY_SLUGS.filter((s) => getBook(s)),
-    [],
-  );
-  const [deck, setDeck] = useState<Card[]>([]);
-  // Shuffle on the client only (avoids a server/client hydration mismatch).
-  useEffect(() => setDeck(buildDeck(slugs)), [slugs]);
-  const [open, setOpen] = useState<number[]>([]); // ids face-up this turn (0–2)
-  const [matched, setMatched] = useState<Set<string>>(new Set());
+  const slugs = useMemo(() => MEMORY_SLUGS.filter((s) => getBook(s)), []);
+
+  const [deck, setDeck] = useState<Card[]>(() => orderedDeck(slugs));
+  const [flipped, setFlipped] = useState<number[]>([]); // face-up this turn (0–2)
+  const [matched, setMatched] = useState<number[]>([]); // stay face-up
   const [moves, setMoves] = useState(0);
   const [locked, setLocked] = useState(false);
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const won = matched.size === slugs.length && slugs.length > 0;
+  // Shuffle on the client only: the server renders the ordered deck, but every
+  // card starts face-down so the two paints are identical — no hydration gap.
+  // The deal itself runs in a microtask so it stays off React's synchronous
+  // render path (a face-down board looks the same either way).
+  useEffect(() => {
+    queueMicrotask(() => setDeck((d) => shuffled(d)));
+    return () => {
+      if (timer.current) clearTimeout(timer.current);
+    };
+  }, []);
 
-  const reset = useCallback(() => {
-    setDeck(buildDeck(slugs));
-    setOpen([]);
-    setMatched(new Set());
+  const restart = useCallback(() => {
+    if (timer.current) clearTimeout(timer.current);
+    setDeck((d) => shuffled(d));
+    setFlipped([]);
+    setMatched([]);
     setMoves(0);
     setLocked(false);
-  }, [slugs]);
+  }, []);
 
   const flip = useCallback(
     (card: Card) => {
-      if (locked || matched.has(card.slug) || open.includes(card.id)) return;
-      const next = [...open, card.id];
-      setOpen(next);
-      if (next.length === 2) {
-        setMoves((m) => m + 1);
-        const [a, b] = next.map((id) => deck.find((c) => c.id === id)!);
-        if (a.slug === b.slug) {
-          setMatched((prev) => new Set(prev).add(a.slug));
-          setOpen([]);
-        } else {
-          setLocked(true);
-          setTimeout(() => {
-            setOpen([]);
-            setLocked(false);
-          }, 800);
-        }
+      if (locked || flipped.includes(card.id) || matched.includes(card.id)) {
+        return;
       }
+
+      const next = [...flipped, card.id];
+      if (next.length < 2) {
+        setFlipped(next);
+        return;
+      }
+
+      // Second card: show both, count the move, then lock until it resolves.
+      const [a, b] = next;
+      const same =
+        deck.find((c) => c.id === a)?.slug === deck.find((c) => c.id === b)?.slug;
+
+      setFlipped(next);
+      setMoves((m) => m + 1);
+      setLocked(true);
+      timer.current = setTimeout(
+        () => {
+          if (same) setMatched((prev) => [...prev, a, b]);
+          setFlipped([]);
+          setLocked(false);
+        },
+        same ? MATCH_MS : MISS_MS,
+      );
     },
-    [deck, open, matched, locked],
+    [deck, flipped, matched, locked],
   );
 
+  const totalPairs = deck.length / 2;
+  const pairs = matched.length / 2;
+  const won = deck.length > 0 && matched.length === deck.length;
+
   return (
-    <div className="mx-auto max-w-[34rem]">
-      {/* Scoreboard */}
-      <div className="mb-4 flex items-center justify-between">
-        <span className="text-body-sm font-semibold text-muted">
-          Moves: <span className="text-ink">{moves}</span> · Pairs:{" "}
-          <span className="text-ink">
-            {matched.size}/{slugs.length}
-          </span>
-        </span>
+    <div className="flex flex-col gap-6">
+      {/* Scoreboard + reshuffle */}
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <div className="flex flex-wrap gap-2">
+          <Badge>
+            {moves} {moves === 1 ? "move" : "moves"}
+          </Badge>
+          <Badge>
+            {pairs} of {totalPairs} pairs
+          </Badge>
+        </div>
         <button
-          onClick={reset}
-          className="rounded-lg border border-hairline bg-surface px-4 py-2 text-button font-bold text-ink hover:border-primary"
+          type="button"
+          onClick={restart}
+          className={`${BTN_OUTLINE} cursor-pointer`}
         >
-          New game
+          Shuffle again
         </button>
       </div>
 
       {/* Board */}
-      <div className="grid grid-cols-3 gap-2.5 sm:grid-cols-4">
+      <div className="grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(120px,1fr))]">
         {deck.map((card) => {
-          const book = getBook(card.slug)!;
-          const isUp = open.includes(card.id) || matched.has(card.slug);
+          const book = getBook(card.slug);
+          if (!book) return null;
+          const isMatched = matched.includes(card.id);
+          const open = isMatched || flipped.includes(card.id);
+
           return (
             <button
               key={card.id}
+              type="button"
               onClick={() => flip(card)}
-              aria-label={isUp ? book.title : "Hidden card"}
-              className="relative aspect-[3/4] overflow-hidden rounded-lg border border-hairline shadow-sm transition-transform active:scale-95"
+              aria-label={open ? book.title : "Face-down card"}
+              className={`relative aspect-[2/3] cursor-pointer overflow-hidden rounded-ui border p-0 transition-[background-color,color,border-color,transform,opacity] duration-[140ms] ease-[ease] ${
+                open ? "bg-canvas" : "bg-canvas-soft"
+              } ${isMatched ? "border-primary opacity-[0.55]" : "border-mute"}`}
             >
-              {isUp ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={coverUrl(book)}
-                  alt={book.title}
-                  className="h-full w-full object-cover"
-                />
-              ) : (
-                <span className="flex h-full w-full items-center justify-center bg-primary text-2xl font-bold text-on-primary">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={coverUrl(book)}
+                alt=""
+                loading="lazy"
+                className={`h-full w-full object-cover ${open ? "block" : "hidden"}`}
+              />
+              {!open && (
+                <span
+                  aria-hidden
+                  className="absolute inset-0 flex items-center justify-center text-[28px] font-bold text-mute"
+                >
                   ?
                 </span>
               )}
@@ -114,19 +156,14 @@ export function MemoryMatch() {
         })}
       </div>
 
-      {/* Win message */}
       {won && (
-        <div className="mt-6 rounded-xl border border-hairline bg-surface-soft p-5 text-center">
-          <p className="text-title-sm font-bold text-ink">
-            🎉 You found all the pairs in {moves} moves!
-          </p>
-          <button
-            onClick={reset}
-            className="mt-3 rounded-pill bg-primary px-6 py-2.5 text-button font-bold text-on-primary hover:bg-primary-strong"
-          >
-            Play again
-          </button>
-        </div>
+        <CrossSell
+          heading={`Done in ${moves} moves.`}
+          blurb="Every cover here is a real book — packed with mazes, colouring, puzzles and more."
+          slug={CROSS_SELL_SLUG}
+          showCover
+          onRestart={restart}
+        />
       )}
     </div>
   );

@@ -1,117 +1,145 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
-import { getBook } from "@/data/books";
 import { QUIZ_QUESTIONS, QUIZ_CROSS_SELL_SLUG } from "@/data/games";
+import { BTN_DARK } from "@/components/ui";
+import { CrossSell } from "@/components/games/GameShell";
+
+const TOTAL = QUIZ_QUESTIONS.length;
 
 export function Quiz() {
   const [idx, setIdx] = useState(0);
-  const [selected, setSelected] = useState<number | null>(null);
+  const [picked, setPicked] = useState<number | null>(null);
   const [score, setScore] = useState(0);
   const [finished, setFinished] = useState(false);
 
-  const total = QUIZ_QUESTIONS.length;
   const q = QUIZ_QUESTIONS[idx];
-  const book = getBook(QUIZ_CROSS_SELL_SLUG);
+  const answered = picked !== null;
+  const last = idx >= TOTAL - 1;
 
   const choose = (i: number) => {
-    if (selected !== null) return;
-    setSelected(i);
+    if (answered) return;
+    setPicked(i);
     if (i === q.answer) setScore((s) => s + 1);
   };
 
   const next = () => {
-    if (idx + 1 >= total) {
+    if (last) {
       setFinished(true);
-    } else {
-      setIdx((n) => n + 1);
-      setSelected(null);
+      return;
     }
+    setIdx((n) => n + 1);
+    setPicked(null);
   };
 
   const restart = () => {
     setIdx(0);
-    setSelected(null);
+    setPicked(null);
     setScore(0);
     setFinished(false);
   };
 
   if (finished) {
-    const perfect = score === total;
+    const verdict =
+      score === TOTAL
+        ? "A perfect round — not a single one missed."
+        : score >= TOTAL / 2
+          ? "Nice work. Have another go and beat that score."
+          : "Good try — the answers stick the second time round.";
+
     return (
-      <div className="mx-auto max-w-[32rem] rounded-xl border border-hairline bg-surface-soft p-6 text-center">
-        <p className="text-display-sm font-bold text-ink">
-          {score}/{total}
-        </p>
-        <p className="mt-1 text-title-sm font-semibold text-ink">
-          {perfect ? "🏆 Perfect score!" : score >= total / 2 ? "🎉 Well done!" : "Good try!"}
-        </p>
-        <div className="mt-5 flex flex-col items-center gap-3">
-          <button
-            onClick={restart}
-            className="rounded-pill bg-primary px-6 py-2.5 text-button font-bold text-on-primary hover:bg-primary-strong"
-          >
-            Play again
-          </button>
-          {book && (
-            <Link
-              href={`/book/${book.slug}`}
-              className="text-button font-bold text-primary hover:text-primary-strong"
-            >
-              Love facts? Get {book.title} →
-            </Link>
-          )}
+      <div className="flex flex-col gap-6">
+        <div className="flex flex-col items-start gap-4 rounded-ui bg-canvas-soft p-8">
+          <p className="text-label font-medium uppercase text-body-mid">
+            All done
+          </p>
+          <h2 className="text-h2">
+            You got {score} out of {TOTAL}.
+          </h2>
+          <p className="text-copy text-body">{verdict}</p>
         </div>
+
+        <CrossSell
+          heading="200 more amazing facts."
+          blurb="Outrageous stats, legendary players and record-breakers — the whole book is facts kids actually want to repeat."
+          slug={QUIZ_CROSS_SELL_SLUG}
+          showCover
+          onRestart={restart}
+        />
       </div>
     );
   }
 
+  const progress = ((idx + 1) / TOTAL) * 100;
+
   return (
-    <div className="mx-auto max-w-[32rem]">
-      <div className="mb-2 flex items-center justify-between text-body-sm font-semibold text-muted">
-        <span>
-          Question {idx + 1} of {total}
+    <div className="flex flex-col gap-5 rounded-ui bg-canvas-soft p-6">
+      {/* Progress + score */}
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <span className="text-label font-medium uppercase text-body-mid">
+          Question {idx + 1} of {TOTAL}
         </span>
-        <span>Score: {score}</span>
+        <span className="text-nav font-semibold text-ink">{score} correct</span>
       </div>
 
-      <div className="rounded-xl border border-hairline bg-surface p-5 shadow-sm">
-        <h2 className="text-title-md font-semibold text-ink">{q.q}</h2>
-        <div className="mt-4 flex flex-col gap-2.5">
-          {q.options.map((opt, i) => {
-            const isAnswer = i === q.answer;
-            const isChosen = selected === i;
-            let cls =
-              "border-hairline bg-surface text-ink hover:border-primary";
-            if (selected !== null) {
-              if (isAnswer) cls = "border-correct bg-correct-soft text-correct";
-              else if (isChosen) cls = "border-wrong bg-wrong-soft text-wrong";
-              else cls = "border-hairline bg-surface text-muted";
-            }
-            return (
-              <button
-                key={i}
-                onClick={() => choose(i)}
-                disabled={selected !== null}
-                className={`flex items-center justify-between rounded-lg border px-4 py-3 text-left text-body-md font-semibold transition-colors ${cls}`}
-              >
-                {opt}
-                {selected !== null && isAnswer && <span>✓</span>}
-                {selected !== null && isChosen && !isAnswer && <span>✗</span>}
-              </button>
-            );
-          })}
+      <div
+        role="progressbar"
+        aria-valuemin={0}
+        aria-valuemax={TOTAL}
+        aria-valuenow={idx + 1}
+        aria-label="Quiz progress"
+        className="h-[6px] w-full overflow-hidden rounded-pill bg-progress-track"
+      >
+        <div
+          className="h-full rounded-pill bg-primary transition-[width] duration-[140ms] ease-[ease]"
+          style={{ width: `${progress}%` }}
+        />
+      </div>
+
+      <h2 className="text-cardlg font-semibold text-ink">{q.q}</h2>
+
+      {/* Options */}
+      <div className="flex flex-col gap-[10px]">
+        {q.options.map((opt, i) => {
+          const isAnswer = i === q.answer;
+          let state =
+            "border-ink bg-canvas text-ink hover:bg-ink hover:text-on-primary";
+          if (answered) {
+            state = isAnswer
+              ? "border-ink bg-ink text-on-primary"
+              : "border-mute bg-canvas text-body-mid";
+          }
+
+          return (
+            <button
+              key={opt}
+              type="button"
+              onClick={() => choose(i)}
+              disabled={answered}
+              className={`w-full cursor-pointer rounded-ui border px-[18px] py-[14px] text-left text-btn font-semibold transition-[background-color,color,border-color,transform] duration-[140ms] ease-[ease] disabled:cursor-default ${state}`}
+            >
+              {opt}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Feedback + next */}
+      {answered && (
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <span className="text-btn font-semibold text-ink">
+            {picked === q.answer
+              ? "Correct!"
+              : `The answer was ${q.options[q.answer]}.`}
+          </span>
+          <button
+            type="button"
+            onClick={next}
+            className={`${BTN_DARK} cursor-pointer`}
+          >
+            {last ? "See my score" : "Next question"}
+          </button>
         </div>
-      </div>
-
-      {selected !== null && (
-        <button
-          onClick={next}
-          className="mt-4 w-full rounded-pill bg-primary px-6 py-3 text-button font-bold text-on-primary hover:bg-primary-strong"
-        >
-          {idx + 1 >= total ? "See my score" : "Next question"}
-        </button>
       )}
     </div>
   );
