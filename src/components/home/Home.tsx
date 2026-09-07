@@ -31,6 +31,13 @@ const byTitle = (a: Book, b: Book) => a.title.localeCompare(b.title);
 const pick = (slugs: string[]) =>
   slugs.map(getBook).filter((b): b is Book => Boolean(b));
 
+/**
+ * Clears the sticky nav (67px on mobile, 76px on desktop) so an anchored
+ * section lands just below it instead of under it. Respected by both native
+ * hash jumps and scrollIntoView.
+ */
+const ANCHOR_OFFSET = "scroll-mt-[68px] sm:scroll-mt-[78px]";
+
 /** Explicit column per hero cover, so captions can be paired to them. */
 const COVER_COL = ["col-start-1", "col-start-2", "col-start-3"];
 
@@ -205,7 +212,10 @@ export function Home() {
       )}
 
       {/* 3 — Popular categories */}
-      <section id="categories" className="bg-canvas-soft px-6 py-16">
+      <section
+        id="categories"
+        className={`${ANCHOR_OFFSET} bg-canvas-soft px-6 py-16`}
+      >
         <div className="mx-auto flex max-w-[1280px] flex-col gap-6">
           <Eyebrow>Popular categories</Eyebrow>
           <h2 className="text-h2">Pick a theme.</h2>
@@ -236,7 +246,10 @@ export function Home() {
       </section>
 
       {/* 4 — Top sellers */}
-      <section id="top-sellers" className="bg-canvas px-6 py-16">
+      <section
+        id="top-sellers"
+        className={`${ANCHOR_OFFSET} bg-canvas px-6 py-16`}
+      >
         <div className="mx-auto max-w-[1280px]">
           <div className="mb-8 flex flex-wrap items-baseline justify-between gap-6">
             <div className="flex flex-col gap-3">
@@ -287,7 +300,10 @@ export function Home() {
       </section>
 
       {/* 5 — Harry Kicker series */}
-      <section id="series" className="bg-canvas-soft px-6 py-16">
+      <section
+        id="series"
+        className={`${ANCHOR_OFFSET} bg-canvas-soft px-6 py-16`}
+      >
         <div className="mx-auto flex max-w-[1280px] flex-col gap-8">
           <div className="grid items-center gap-12 [grid-template-columns:repeat(auto-fit,minmax(280px,1fr))]">
             <div className="flex flex-col items-start gap-6">
@@ -393,7 +409,7 @@ export function Home() {
       {/* 7 — All books */}
       <section
         id="browse"
-        className="scroll-mt-20 bg-canvas-soft px-6 py-16"
+        className={`${ANCHOR_OFFSET} bg-canvas-soft px-6 py-16`}
       >
         <div className="mx-auto max-w-[1280px]">
           <div className="mb-4">
