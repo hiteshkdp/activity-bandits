@@ -27,6 +27,24 @@ const COLUMNS = [
 ];
 
 /**
+ * Same-page anchors use a plain <a> so the browser scrolls natively —
+ * next/link updates the hash without moving the page when you're already on
+ * the target route.
+ */
+function FooterLink({ href, children }: { href: string; children: string }) {
+  const cls = "text-nav text-canvas-soft hover:underline";
+  return href.startsWith("/#") ? (
+    <a href={href} className={cls}>
+      {children}
+    </a>
+  ) : (
+    <Link href={href} className={cls}>
+      {children}
+    </Link>
+  );
+}
+
+/**
  * `full` (home) shows the three link columns; `compact` (inner pages) shows a
  * single link row. Both share the ink band and the legal line.
  */
@@ -46,13 +64,9 @@ export function SiteFooter({
               { label: "About us", href: "/about" },
               { label: "Contact", href: "/contact" },
             ].map((l) => (
-              <Link
-                key={l.href}
-                href={l.href}
-                className="text-nav text-canvas-soft hover:underline"
-              >
+              <FooterLink key={l.href} href={l.href}>
                 {l.label}
-              </Link>
+              </FooterLink>
             ))}
           </div>
           <p className="max-w-[70ch] text-caption text-mute">
@@ -72,13 +86,9 @@ export function SiteFooter({
             <div key={col.head} className="flex flex-col gap-3">
               <Label className="!text-mute">{col.head}</Label>
               {col.links.map((l) => (
-                <Link
-                  key={l.href + l.label}
-                  href={l.href}
-                  className="text-nav text-canvas-soft hover:underline"
-                >
+                <FooterLink key={l.href + l.label} href={l.href}>
                   {l.label}
-                </Link>
+                </FooterLink>
               ))}
             </div>
           ))}
