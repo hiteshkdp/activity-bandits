@@ -86,9 +86,13 @@ export function Home() {
             </div>
           </div>
 
-          {/* Covers with hand-drawn arrow captions */}
+          {/* Covers with hand-drawn arrow captions.
+              The captions use the design's fixed widths (84/165/140px + a 40px
+              arrow), which are wider than a grid column below ~640px — they'd
+              bleed across neighbouring covers and point at the wrong book. So
+              they only appear from `sm` up, where the columns are wide enough. */}
           <div className="grid items-end gap-x-4 gap-y-2 [grid-template-columns:repeat(3,minmax(0,1fr))]">
-            <div className="col-start-1 flex w-max items-end gap-0.5 justify-self-start">
+            <div className="col-start-1 hidden w-max items-end gap-0.5 justify-self-start sm:flex">
               <span className="w-[84px] flex-none text-[15px] font-semibold leading-[1.3] tracking-[-0.374px] text-pretty text-ink">
                 Perfect for travel.
               </span>
@@ -99,7 +103,7 @@ export function Home() {
                 className="-mb-2 w-10 flex-none [transform:scale(-1,-1)]"
               />
             </div>
-            <div className="col-start-3 flex w-max items-end justify-end gap-0.5 justify-self-end">
+            <div className="col-start-3 hidden w-max items-end justify-end gap-0.5 justify-self-end sm:flex">
               <span className="w-[165px] flex-none text-right text-[15px] font-semibold leading-[1.3] tracking-[-0.374px] text-pretty text-ink">
                 Sparks great discussion and laughter.
               </span>
@@ -118,11 +122,11 @@ export function Home() {
                 src={coverUrl(b)}
                 alt={`${b.title} cover`}
                 loading="eager"
-                className="h-[320px] w-full rounded-img object-contain"
+                className="h-[170px] w-full rounded-img object-contain sm:h-[320px]"
               />
             ))}
 
-            <div className="col-start-2 flex w-max items-start gap-0.5 justify-self-start">
+            <div className="col-start-2 hidden w-max items-start gap-0.5 justify-self-start sm:flex">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/art/arrow-up.png"
