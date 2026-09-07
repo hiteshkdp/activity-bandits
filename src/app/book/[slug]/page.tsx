@@ -3,7 +3,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { BOOKS, getBook } from "@/data/books";
 import { coverUrl } from "@/lib/amazon";
-import { Stars } from "@/components/Stars";
 import { BookCard } from "@/components/BookCard";
 import { AplusGallery } from "@/components/AplusGallery";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -111,8 +110,6 @@ export default async function BookPage({
               <h1 className="text-title-lg font-bold text-ink">{book.title}</h1>
               <p className="mt-1 text-body-sm text-muted">by {book.author}</p>
             </div>
-
-            {book.rating ? <Stars rating={book.rating} /> : null}
 
             <p className="text-body-md leading-relaxed text-body">{book.blurb}</p>
 

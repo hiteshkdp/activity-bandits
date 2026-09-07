@@ -1,18 +1,22 @@
 import { BOOKS, CATEGORIES, AUTHORS } from "@/data/books";
 import { BookBrowser } from "@/components/BookBrowser";
-import { ReviewsStrip } from "@/components/ReviewsStrip";
 import { TopSellers } from "@/components/TopSellers";
 import { AuthorRow } from "@/components/AuthorRow";
 import { ValueProps } from "@/components/ValueProps";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SITE } from "@/config/site";
+import { categoryColor } from "@/lib/categories";
 
-// Real social-proof figures computed from the catalogue.
-const RATED = BOOKS.filter((b) => typeof b.rating === "number");
-const AVG_RATING = RATED.length
-  ? (RATED.reduce((s, b) => s + (b.rating ?? 0), 0) / RATED.length).toFixed(1)
-  : null;
+/** Popular genres surfaced in the hero (label + the real category value). */
+const POPULAR: { label: string; category: string; emoji: string }[] = [
+  { label: "Football", category: "Football", emoji: "⚽" },
+  { label: "Travel", category: "Travel", emoji: "✈️" },
+  { label: "Sport", category: "Sport", emoji: "🏅" },
+  { label: "Puzzles", category: "Puzzles and Words", emoji: "🧩" },
+  { label: "Reading", category: "Reading", emoji: "📚" },
+  { label: "Animals", category: "Animals", emoji: "🐾" },
+];
 
 export default async function Home({
   searchParams,
@@ -41,13 +45,8 @@ export default async function Home({
             {SITE.tagline}
           </p>
 
-          {/* Trust badges (real figures) */}
+          {/* Trust badges */}
           <div className="mt-6 flex flex-wrap justify-center gap-2.5">
-            {AVG_RATING && (
-              <span className="inline-flex items-center gap-1.5 rounded-pill bg-surface px-3 py-1.5 text-body-sm font-bold text-ink shadow-sm">
-                <span className="text-accent">★</span> {AVG_RATING} average
-              </span>
-            )}
             <span className="rounded-pill bg-surface px-3 py-1.5 text-body-sm font-bold text-ink shadow-sm">
               {BOOKS.length} books
             </span>
@@ -59,13 +58,48 @@ export default async function Home({
             </span>
           </div>
 
-          <div className="mt-7">
+          <div className="mt-7 flex flex-wrap justify-center gap-3">
             <a
               href="#browse"
               className="inline-block rounded-pill bg-primary px-7 py-3 text-button font-bold text-on-primary shadow-sm transition-colors hover:bg-primary-strong"
             >
-              Browse all {BOOKS.length} books
+              Browse all books
             </a>
+            <a
+              href="/play"
+              className="inline-block rounded-pill border-2 border-primary bg-surface px-7 py-3 text-button font-bold text-primary shadow-sm transition-colors hover:bg-primary/10"
+            >
+              Play a free game →
+            </a>
+          </div>
+
+          {/* Popular categories */}
+          <div className="mt-10">
+            <p className="text-caption font-bold uppercase tracking-[0.14em] text-muted">
+              Popular categories
+            </p>
+            <div className="mt-4 flex flex-wrap justify-center gap-3">
+              {POPULAR.map((c) => {
+                const color = categoryColor(c.category);
+                return (
+                  <a
+                    key={c.label}
+                    href={`/?theme=${encodeURIComponent(c.category)}#browse`}
+                    className="group flex items-center gap-2.5 rounded-xl border border-hairline bg-surface px-4 py-2.5 font-bold text-ink shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+                    style={{ borderColor: `${color}55` }}
+                  >
+                    <span
+                      className="flex h-8 w-8 items-center justify-center rounded-pill text-lg"
+                      style={{ backgroundColor: `${color}22` }}
+                      aria-hidden
+                    >
+                      {c.emoji}
+                    </span>
+                    <span className="text-body-md">{c.label}</span>
+                  </a>
+                );
+              })}
+            </div>
           </div>
         </div>
       </section>
@@ -76,7 +110,6 @@ export default async function Home({
       {/* Social proof + featured */}
       {!activeCategory && (
         <>
-          <ReviewsStrip />
           <TopSellers />
           <AuthorRow
             author="Harry Kicker"

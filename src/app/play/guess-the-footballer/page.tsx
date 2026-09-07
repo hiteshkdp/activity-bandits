@@ -2,14 +2,15 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
-import { SlidingPuzzle } from "@/components/games/SlidingPuzzle";
+import { GuessTheFootballer } from "@/components/games/GuessTheFootballer";
 
 export const metadata: Metadata = {
-  title: "Sliding Puzzle — Free Kids Game",
-  description: "Slide the tiles to unscramble the picture. A free sliding puzzle for kids.",
+  title: "Guess the Footballer — Free Kids Game",
+  description:
+    "Three clues, one famous footballer. Can you guess all 10? A free football guessing game for kids.",
 };
 
-export default function SlidingPuzzlePage() {
+export default function GuessTheFootballerPage() {
   return (
     <>
       <SiteHeader />
@@ -17,12 +18,14 @@ export default function SlidingPuzzlePage() {
         <Link href="/play" className="text-body-sm font-semibold text-muted hover:text-primary">
           ← All games
         </Link>
-        <h1 className="mt-4 text-title-lg font-semibold text-ink">Sliding Puzzle</h1>
+        <h1 className="mt-4 text-title-lg font-semibold text-ink">
+          Guess the Footballer
+        </h1>
         <p className="mb-6 mt-1 text-body-md text-body">
-          Tap a tile next to the empty space to slide it. Put the picture back
-          together!
+          Read the clues, then pick the famous player. Stuck? Reveal another
+          clue. Can you name all 10?
         </p>
-        <SlidingPuzzle />
+        <GuessTheFootballer />
       </main>
       <SiteFooter />
     </>

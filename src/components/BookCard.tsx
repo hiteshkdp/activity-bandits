@@ -2,11 +2,10 @@ import Link from "next/link";
 import type { Book } from "@/data/books";
 import { coverUrl } from "@/lib/amazon";
 import { categoryColor } from "@/lib/categories";
-import { Stars } from "@/components/Stars";
 
 /**
  * A "product tile" book card (LEGO-store style): white card, cover on a soft
- * top panel with a sharp price-tag category badge overlaid, then title + rating
+ * top panel with a sharp price-tag category badge overlaid, then title + ages
  * below. Covers use a FIXED height so every tile lines up (no cropping). The
  * whole tile links to the book's detail page.
  */
@@ -39,10 +38,7 @@ export function BookCard({ book }: { book: Book }) {
           {book.title}
         </h3>
         <div className="mt-auto flex items-center gap-1.5 pt-1 text-caption text-muted">
-          {book.rating ? <Stars rating={book.rating} /> : null}
-          <span className="font-semibold">
-            {book.rating ? `· ${book.ages}` : book.ages}
-          </span>
+          <span className="font-semibold">{book.ages}</span>
         </div>
       </div>
     </Link>
