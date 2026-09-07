@@ -30,6 +30,17 @@ const byTitle = (a: Book, b: Book) => a.title.localeCompare(b.title);
 const pick = (slugs: string[]) =>
   slugs.map(getBook).filter((b): b is Book => Boolean(b));
 
+/** Explicit column per hero cover, so captions can be paired to them. */
+const COVER_COL = ["col-start-1", "col-start-2", "col-start-3"];
+
+/** Hero caption text: small and centred under its cover on mobile, the
+ *  design's 15px fixed-width label from `sm`. */
+const CAP_TEXT =
+  "w-full flex-none text-center text-[13px] font-semibold leading-[1.25] text-pretty text-ink sm:text-[15px] sm:leading-[1.3] sm:tracking-[-0.374px]";
+
+/** The hand-drawn arrows only make sense in the diagonal `sm` layout. */
+const CAP_ARROW = "hidden w-10 flex-none sm:block";
+
 export function Home() {
   const [filter, setFilter] = useState("All");
 
@@ -87,55 +98,62 @@ export function Home() {
           </div>
 
           {/* Covers with hand-drawn arrow captions.
-              The captions use the design's fixed widths (84/165/140px + a 40px
-              arrow), which are wider than a grid column below ~640px — they'd
-              bleed across neighbouring covers and point at the wrong book. So
-              they only appear from `sm` up, where the columns are wide enough. */}
-          <div className="grid items-end gap-x-4 gap-y-2 [grid-template-columns:repeat(3,minmax(0,1fr))]">
-            <div className="col-start-1 hidden w-max items-end gap-0.5 justify-self-start sm:flex">
-              <span className="w-[84px] flex-none text-[15px] font-semibold leading-[1.3] tracking-[-0.374px] text-pretty text-ink">
-                Perfect for travel.
-              </span>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/art/arrow.png"
-                alt=""
-                className="-mb-2 w-10 flex-none [transform:scale(-1,-1)]"
-              />
-            </div>
-            <div className="col-start-3 hidden w-max items-end justify-end gap-0.5 justify-self-end sm:flex">
-              <span className="w-[165px] flex-none text-right text-[15px] font-semibold leading-[1.3] tracking-[-0.374px] text-pretty text-ink">
-                Sparks great discussion and laughter.
-              </span>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/art/arrow-up.png"
-                alt=""
-                className="-mb-2 w-10 flex-none [transform:scale(-1,-1)]"
-              />
-            </div>
-
-            {heroCovers.map((b) => (
+              Placement is explicit per breakpoint. On mobile each caption sits
+              directly under its own cover (row 2), centred and arrow-less — the
+              design's fixed caption widths (84/165/140px plus a 40px arrow) are
+              far wider than a ~103px phone column, so the diagonal layout bled
+              across neighbours and labelled the wrong books. From `sm` the
+              designed placement returns: captions above covers 1 and 3, below
+              cover 2, with the arrows back. */}
+          <div className="grid items-start gap-x-4 gap-y-2 [grid-template-columns:repeat(3,minmax(0,1fr))] sm:items-end">
+            {heroCovers.map((b, i) => (
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 key={b.slug}
                 src={coverUrl(b)}
                 alt={`${b.title} cover`}
                 loading="eager"
-                className="h-[170px] w-full rounded-img object-contain sm:h-[320px]"
+                className={`${COVER_COL[i]} row-start-1 h-[170px] w-full rounded-img object-contain sm:row-start-2 sm:h-[320px]`}
               />
             ))}
 
-            <div className="col-start-2 hidden w-max items-start gap-0.5 justify-self-start sm:flex">
+            {/* Cover 1 — Airplane */}
+            <div className="col-start-1 row-start-2 flex w-full items-end justify-center gap-0.5 sm:row-start-1 sm:w-max sm:justify-start sm:justify-self-start">
+              <span className={`${CAP_TEXT} sm:w-[84px] sm:text-left`}>
+                Perfect for travel.
+              </span>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/art/arrow.png"
+                alt=""
+                className={`${CAP_ARROW} -mb-2 [transform:scale(-1,-1)]`}
+              />
+            </div>
+
+            {/* Cover 2 — Football Word Search */}
+            <div className="col-start-2 row-start-2 flex w-full items-start justify-center gap-0.5 sm:row-start-3 sm:w-max sm:justify-start sm:justify-self-start">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/art/arrow-up.png"
                 alt=""
-                className="-mt-1.5 w-10 flex-none"
+                className={`${CAP_ARROW} -mt-1.5`}
               />
-              <span className="w-[140px] flex-none text-[15px] font-semibold leading-[1.3] tracking-[-0.374px] text-pretty text-ink">
+              <span className={`${CAP_TEXT} sm:w-[140px] sm:text-left`}>
                 Perfect for football mad kids
               </span>
+            </div>
+
+            {/* Cover 3 — Would You Rather */}
+            <div className="col-start-3 row-start-2 flex w-full items-end justify-center gap-0.5 sm:row-start-1 sm:w-max sm:justify-end sm:justify-self-end">
+              <span className={`${CAP_TEXT} sm:w-[165px] sm:text-right`}>
+                Sparks great discussion and laughter.
+              </span>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/art/arrow-up.png"
+                alt=""
+                className={`${CAP_ARROW} -mb-2 [transform:scale(-1,-1)]`}
+              />
             </div>
           </div>
         </div>
