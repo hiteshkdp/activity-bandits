@@ -33,8 +33,11 @@ export function SiteHeader() {
     setOpen(false);
   }, [pathname]);
 
+  // Only real routes get the active weight. The "/#" links are anchors to
+  // sections of the home page, so treating them as "current page" bolded
+  // several of them at once.
   const isActive = (href: string) =>
-    href.startsWith("/#") ? pathname === "/" : pathname === href;
+    !href.startsWith("/#") && pathname === href;
 
   /**
    * next/link updates the hash but doesn't scroll when we're already on the
