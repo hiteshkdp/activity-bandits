@@ -21,8 +21,9 @@ import {
   Badge,
   Label,
   BTN_PRIMARY,
-  BTN_OUTLINE,
-  BTN_OUTLINE_ON_INK,
+  BTN_PRIMARY_TIGHT,
+  BTN_OUTLINE_TIGHT,
+  BTN_OUTLINE_ON_INK_TIGHT,
   COVER_BOX,
 } from "@/components/ui";
 
@@ -83,11 +84,12 @@ export function Home() {
               Fun activity &amp; puzzle books for kids — tap any cover to grab
               it from your local Amazon store.
             </p>
-            <div className="flex flex-wrap gap-3">
-              <a href="#browse" className={BTN_PRIMARY}>
+            {/* Kept side by side on phones via the tight button variants. */}
+            <div className="flex flex-wrap gap-2 sm:gap-3">
+              <a href="#browse" className={BTN_PRIMARY_TIGHT}>
                 Browse all books
               </a>
-              <Link href="/play" className={BTN_OUTLINE}>
+              <Link href="/play" className={BTN_OUTLINE_TIGHT}>
                 Play a free game
               </Link>
             </div>
@@ -180,14 +182,19 @@ export function Home() {
               <p className="max-w-[44ch] text-lead text-pretty text-canvas-soft">
                 {featured.blurb}
               </p>
-              <div className="flex flex-wrap gap-3">
-                <a href={`/go/${featured.slug}`} className={BTN_PRIMARY}>
+              {/* Side by side on phones: tight variants, and flex-1 so the
+                  pair splits the row evenly rather than wrapping. */}
+              <div className="flex w-full flex-wrap gap-2 sm:gap-3">
+                <a
+                  href={`/go/${featured.slug}`}
+                  className={`${BTN_PRIMARY_TIGHT} flex-1 sm:flex-none`}
+                >
                   Buy on Amazon
                 </a>
                 <button
                   type="button"
                   onClick={() => applyFilter("Travel")}
-                  className={BTN_OUTLINE_ON_INK}
+                  className={`${BTN_OUTLINE_ON_INK_TIGHT} flex-1 cursor-pointer sm:flex-none`}
                 >
                   See all travel books
                 </button>

@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { getBook } from "@/data/books";
 import { coverUrl } from "@/lib/amazon";
-import { BTN_PRIMARY } from "@/components/ui";
+import { BTN_PRIMARY_TIGHT } from "@/components/ui";
 
 const WIDTHS = {
   narrow: "max-w-[760px]",
@@ -62,7 +62,7 @@ export function CrossSell({
   const book = getBook(slug);
 
   return (
-    <div className="flex flex-col items-start gap-5 rounded-ui bg-ink p-8 text-on-primary sm:flex-row sm:items-center">
+    <div className="flex flex-col items-start gap-5 rounded-ui bg-ink p-6 text-on-primary sm:flex-row sm:items-center sm:p-8">
       {showCover && book && (
         // eslint-disable-next-line @next/next/no-img-element
         <img
@@ -75,14 +75,15 @@ export function CrossSell({
       <div className="flex flex-col items-start gap-5">
         <h3 className="text-cardlg font-semibold text-on-primary">{heading}</h3>
         <p className="text-copy text-canvas-soft">{blurb}</p>
-        <div className="flex flex-wrap gap-3">
-          <a href={`/go/${slug}`} className={BTN_PRIMARY}>
+        {/* Tight variants so the pair stays side by side on a phone. */}
+        <div className="flex flex-wrap gap-2 sm:gap-3">
+          <a href={`/go/${slug}`} className={BTN_PRIMARY_TIGHT}>
             Buy on Amazon
           </a>
           <button
             type="button"
             onClick={onRestart}
-            className="inline-flex cursor-pointer items-center justify-center rounded-ui border border-canvas-soft bg-transparent px-6 py-3 text-btn font-semibold text-on-primary transition-[background-color,color,border-color,transform] duration-[140ms] ease-[ease] hover:bg-ink-soft"
+            className="inline-flex cursor-pointer items-center justify-center rounded-ui border border-canvas-soft bg-transparent px-3.5 py-2.5 text-[15px] font-semibold leading-[22px] text-on-primary transition-[background-color,color,border-color,transform] duration-[140ms] ease-[ease] hover:bg-ink-soft sm:px-6 sm:py-3 sm:text-btn"
           >
             Play again
           </button>
