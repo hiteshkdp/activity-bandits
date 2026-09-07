@@ -57,7 +57,7 @@ export function SiteHeader() {
     };
 
   return (
-    <nav className="sticky top-0 z-20 border-b border-mute bg-canvas px-6 py-3">
+    <nav className="sticky top-0 z-20 border-b border-mute bg-canvas px-6 py-3 relative">
       <div className="mx-auto flex max-w-[1280px] items-center gap-6">
         <Link
           href="/"
@@ -151,9 +151,13 @@ export function SiteHeader() {
 
       {/* Mobile panel */}
       {open && (
+        // Absolutely positioned so the panel overlays the page instead of
+        // pushing it down. When it was in flow, opening it grew the nav by
+        // ~377px, and closing it on click shifted every anchor target up by
+        // the same amount — so hash jumps overshot their section.
         <div
           id="mobile-menu"
-          className="mt-3 flex flex-col gap-1 border-t border-mute pt-3 sm:hidden"
+          className="absolute left-0 right-0 top-full z-30 flex max-h-[75vh] flex-col gap-1 overflow-y-auto border-b border-mute bg-canvas px-6 pb-4 pt-3 sm:hidden"
         >
           {LINKS.map((l) =>
             l.pill ? (

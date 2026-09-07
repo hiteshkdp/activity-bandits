@@ -178,7 +178,7 @@ export function Home() {
                 src={coverUrl(featured)}
                 alt={`${featured.title} cover`}
                 loading="lazy"
-                className="w-[min(340px,100%)] rounded-ui"
+                className="aspect-[3/4] w-[min(340px,100%)] rounded-ui object-contain"
               />
             </div>
             <div className="flex flex-col items-start gap-6">
@@ -322,7 +322,7 @@ export function Home() {
                 src="/covers/bravery-in-the-big-game.jpg"
                 alt="Bravery In The Big Game cover"
                 loading="lazy"
-                className="w-[min(300px,100%)] rounded-ui"
+                className="aspect-[3/4] w-[min(300px,100%)] rounded-ui object-contain"
               />
             </div>
           </div>

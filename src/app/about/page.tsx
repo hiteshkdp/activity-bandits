@@ -87,7 +87,7 @@ export default function AboutPage() {
                 src="/covers/bravery-in-the-big-game.jpg"
                 alt="Bravery In The Big Game cover"
                 loading="lazy"
-                className="w-[min(300px,100%)] rounded-ui"
+                className="aspect-[3/4] w-[min(300px,100%)] rounded-ui object-contain"
               />
             </div>
           </div>

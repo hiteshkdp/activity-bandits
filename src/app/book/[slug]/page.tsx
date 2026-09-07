@@ -102,7 +102,7 @@ export default async function BookPage({
                   src={coverUrl(book)}
                   alt={`${book.title} cover`}
                   loading="eager"
-                  className="w-[min(360px,100%)] rounded-img"
+                  className="aspect-[3/4] w-[min(360px,100%)] rounded-img object-contain"
                 />
               </div>
 
