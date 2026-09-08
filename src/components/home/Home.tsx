@@ -24,7 +24,8 @@ import {
   BTN_PRIMARY,
   BTN_PRIMARY_TIGHT,
   BTN_OUTLINE_TIGHT,
-  BTN_OUTLINE_ON_INK_TIGHT,
+  BTN_PRIMARY_COMPACT,
+  BTN_OUTLINE_ON_INK_COMPACT,
   COVER_BOX,
   ParentsLoveFlag,
 } from "@/components/ui";
@@ -187,8 +188,9 @@ export function Home() {
             <FeatureHalf
               book={newRelease}
               eyebrow={`New release · ${newRelease.ages.replace("-", "–")}`}
-              filter={newRelease.category}
-              filterLabel={`See all ${newRelease.category.toLowerCase()} books`}
+              tone="green"
+              filter="Girls"
+              filterLabel="See all girls' books"
               onFilter={applyFilter}
             />
           )}
@@ -447,12 +449,14 @@ export function Home() {
 function FeatureHalf({
   book,
   eyebrow,
+  tone,
   filter,
   filterLabel,
   onFilter,
 }: {
   book: Book;
   eyebrow: string;
+  tone?: "blue" | "green";
   filter: string;
   filterLabel: string;
   onFilter: (next: string) => void;
@@ -469,22 +473,22 @@ function FeatureHalf({
         />
       </a>
       <div className="flex flex-col items-start gap-4">
-        <Eyebrow>{eyebrow}</Eyebrow>
+        <Eyebrow tone={tone}>{eyebrow}</Eyebrow>
         <h2 className="text-[clamp(24px,2.6vw,32px)] font-medium leading-[1.15] text-pretty text-on-primary">
           {book.title}
         </h2>
         <p className="text-copy text-pretty text-canvas-soft">{book.blurb}</p>
-        <div className="flex w-full flex-wrap gap-2 sm:gap-3">
+        <div className="flex w-full flex-wrap gap-2">
           <a
             href={`/go/${book.slug}`}
-            className={`${BTN_PRIMARY_TIGHT} flex-1 sm:flex-none`}
+            className={`${BTN_PRIMARY_COMPACT} flex-1 sm:flex-none`}
           >
             Buy on Amazon
           </a>
           <button
             type="button"
             onClick={() => onFilter(filter)}
-            className={`${BTN_OUTLINE_ON_INK_TIGHT} flex-1 cursor-pointer sm:flex-none`}
+            className={`${BTN_OUTLINE_ON_INK_COMPACT} flex-1 cursor-pointer sm:flex-none`}
           >
             {filterLabel}
           </button>

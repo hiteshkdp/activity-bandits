@@ -39,16 +39,36 @@ export const BTN_PRIMARY_TIGHT = `${BTN_BASE_TIGHT} bg-primary text-on-primary h
 
 export const BTN_OUTLINE_TIGHT = `${BTN_BASE_TIGHT} border border-ink bg-canvas text-ink hover:bg-ink hover:text-on-primary`;
 
-export const BTN_OUTLINE_ON_INK_TIGHT = `${BTN_BASE_TIGHT} border border-canvas-soft bg-ink text-on-primary hover:bg-ink-soft`;
+/**
+ * Always-compact buttons — unlike BTN_*_TIGHT these never upsize at `sm`.
+ * For button pairs in a half-width column, where the 18px buttons wrap.
+ */
+const BTN_BASE_COMPACT =
+  "inline-flex items-center justify-center rounded-ui px-3.5 py-2.5 text-[15px] font-semibold leading-[22px] transition-[background-color,color,border-color,transform] duration-[140ms] ease-[ease]";
+
+export const BTN_PRIMARY_COMPACT = `${BTN_BASE_COMPACT} bg-primary text-on-primary hover:bg-primary-hover`;
+
+export const BTN_OUTLINE_ON_INK_COMPACT = `${BTN_BASE_COMPACT} border border-canvas-soft bg-ink text-on-primary hover:bg-ink-soft`;
 
 /** Cover image box — fixed height, contained, never cropped, no fill. */
 export const COVER_BOX =
   "w-full h-[280px] object-contain object-center rounded-img";
 
-/** Blue section eyebrow pill. Sits above every section heading. */
-export function Eyebrow({ children }: { children: ReactNode }) {
+/**
+ * Section eyebrow pill. Blue by default; `tone="green"` marks a new release.
+ */
+export function Eyebrow({
+  children,
+  tone = "blue",
+}: {
+  children: ReactNode;
+  tone?: "blue" | "green";
+}) {
+  const bg = tone === "green" ? "bg-accent-green" : "bg-accent-blue";
   return (
-    <p className="w-fit rounded-pill bg-accent-blue px-4 py-[9px] text-eyebrow font-semibold uppercase text-white">
+    <p
+      className={`w-fit rounded-pill ${bg} px-4 py-[9px] text-eyebrow font-semibold uppercase text-white`}
+    >
       {children}
     </p>
   );
