@@ -3,8 +3,11 @@
  * the Harry Kicker series row, the category tiles and the filter chips.
  */
 
-/** The single book in the dark "featured" band under the hero. */
+/** Left half of the dark band under the hero — the "Most popular" spot. */
 export const FEATURED_SLUG = "airplane-activity-book-for-kids-ages-4-8";
+
+/** Right half of that band — the "New release" spot. Swap this on launch day. */
+export const NEW_RELEASE_SLUG = "gymnastics-coloring-book-for-girls";
 
 /** Top sellers grid (left → right). Use each book's `slug`. */
 export const TOP_SELLER_SLUGS: string[] = [

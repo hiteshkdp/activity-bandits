@@ -5,6 +5,7 @@ import Link from "next/link";
 import { BOOKS, getBook, type Book } from "@/data/books";
 import {
   FEATURED_SLUG,
+  NEW_RELEASE_SLUG,
   TOP_SELLER_SLUGS,
   SERIES_SLUGS,
   HERO_COVER_SLUGS,
@@ -60,6 +61,7 @@ export function Home() {
   );
 
   const featured = getBook(FEATURED_SLUG);
+  const newRelease = getBook(NEW_RELEASE_SLUG);
   const topSellers = pick(TOP_SELLER_SLUGS);
   const series = pick(SERIES_SLUGS);
   const heroCovers = pick(HERO_COVER_SLUGS);
@@ -169,48 +171,29 @@ export function Home() {
         </div>
       </section>
 
-      {/* 2 — Featured book */}
-      {featured && (
-        <section className="bg-ink px-6 py-16 text-on-primary">
-          <div className="mx-auto grid max-w-[1280px] items-center gap-12 [grid-template-columns:repeat(auto-fit,minmax(280px,1fr))]">
-            <div className="flex justify-center">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={coverUrl(featured)}
-                alt={`${featured.title} cover`}
-                loading="lazy"
-                className="aspect-[3/4] w-[min(340px,100%)] rounded-ui object-contain"
-              />
-            </div>
-            <div className="flex flex-col items-start gap-6">
-              <Eyebrow>Most popular · Ages 4–8</Eyebrow>
-              <h2 className="text-h2 text-pretty text-on-primary">
-                {featured.title}
-              </h2>
-              <p className="max-w-[44ch] text-lead text-pretty text-canvas-soft">
-                {featured.blurb}
-              </p>
-              {/* Side by side on phones: tight variants, and flex-1 so the
-                  pair splits the row evenly rather than wrapping. */}
-              <div className="flex w-full flex-wrap gap-2 sm:gap-3">
-                <a
-                  href={`/go/${featured.slug}`}
-                  className={`${BTN_PRIMARY_TIGHT} flex-1 sm:flex-none`}
-                >
-                  Buy on Amazon
-                </a>
-                <button
-                  type="button"
-                  onClick={() => applyFilter("Travel")}
-                  className={`${BTN_OUTLINE_ON_INK_TIGHT} flex-1 cursor-pointer sm:flex-none`}
-                >
-                  See all travel books
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
+      {/* 2 — Featured book + New release, equally split */}
+      <section className="bg-ink px-6 py-16 text-on-primary">
+        <div className="mx-auto grid max-w-[1280px] gap-12 [grid-template-columns:repeat(auto-fit,minmax(min(420px,100%),1fr))]">
+          {featured && (
+            <FeatureHalf
+              book={featured}
+              eyebrow={`Most popular · ${featured.ages.replace("-", "–")}`}
+              filter="Travel"
+              filterLabel="See all travel books"
+              onFilter={applyFilter}
+            />
+          )}
+          {newRelease && (
+            <FeatureHalf
+              book={newRelease}
+              eyebrow={`New release · ${newRelease.ages.replace("-", "–")}`}
+              filter={newRelease.category}
+              filterLabel={`See all ${newRelease.category.toLowerCase()} books`}
+              onFilter={applyFilter}
+            />
+          )}
+        </div>
+      </section>
 
       {/* 3 — Popular categories */}
       <section
@@ -454,5 +437,59 @@ export function Home() {
         </div>
       </section>
     </main>
+  );
+}
+
+/**
+ * One half of the dark band: cover beside the pitch. Sized for a ~610px
+ * column, so the heading steps down from the full-width `text-h2`.
+ */
+function FeatureHalf({
+  book,
+  eyebrow,
+  filter,
+  filterLabel,
+  onFilter,
+}: {
+  book: Book;
+  eyebrow: string;
+  filter: string;
+  filterLabel: string;
+  onFilter: (next: string) => void;
+}) {
+  return (
+    <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-8">
+      <a href={`/go/${book.slug}`} className="block flex-none">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={coverUrl(book)}
+          alt={`${book.title} cover`}
+          loading="lazy"
+          className="aspect-[3/4] w-[min(200px,60%)] rounded-ui object-contain sm:w-[190px]"
+        />
+      </a>
+      <div className="flex flex-col items-start gap-4">
+        <Eyebrow>{eyebrow}</Eyebrow>
+        <h2 className="text-[clamp(24px,2.6vw,32px)] font-medium leading-[1.15] text-pretty text-on-primary">
+          {book.title}
+        </h2>
+        <p className="text-copy text-pretty text-canvas-soft">{book.blurb}</p>
+        <div className="flex w-full flex-wrap gap-2 sm:gap-3">
+          <a
+            href={`/go/${book.slug}`}
+            className={`${BTN_PRIMARY_TIGHT} flex-1 sm:flex-none`}
+          >
+            Buy on Amazon
+          </a>
+          <button
+            type="button"
+            onClick={() => onFilter(filter)}
+            className={`${BTN_OUTLINE_ON_INK_TIGHT} flex-1 cursor-pointer sm:flex-none`}
+          >
+            {filterLabel}
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }
