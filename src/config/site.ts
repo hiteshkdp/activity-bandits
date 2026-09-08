@@ -22,10 +22,10 @@ export const SITE = {
   tagline: "Fun activity & puzzle books for kids — tap any cover to grab it from your local Amazon store.",
 
   /**
-   * ⚠️ PLACEHOLDER — replace with your real inbox before going live.
-   * Used by the Contact page (the mailto button and the message form).
+   * Live inbox (Zoho Mail on the activitybandits.com domain).
+   * Used by the Contact page (mailto button + message form) and the footer.
    */
-  contactEmail: "hello@example.com",
+  contactEmail: "hello@activitybandits.com",
 
   /**
    * Canonical site URL — used for canonical + OpenGraph links.

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Label } from "@/components/ui";
+import { SITE } from "@/config/site";
 
 const COLUMNS = [
   {
@@ -22,6 +23,7 @@ const COLUMNS = [
     links: [
       { label: "About us", href: "/about" },
       { label: "Contact", href: "/contact" },
+      { label: SITE.contactEmail, href: `mailto:${SITE.contactEmail}` },
     ],
   },
 ];
@@ -33,7 +35,8 @@ const COLUMNS = [
  */
 function FooterLink({ href, children }: { href: string; children: string }) {
   const cls = "text-nav text-canvas-soft hover:underline";
-  return href.startsWith("/#") ? (
+  // Same-page anchors and mailto: links both need a plain <a>.
+  return href.startsWith("/#") || href.startsWith("mailto:") ? (
     <a href={href} className={cls}>
       {children}
     </a>
@@ -63,6 +66,7 @@ export function SiteFooter({
               { label: "Free fun", href: "/play" },
               { label: "About us", href: "/about" },
               { label: "Contact", href: "/contact" },
+              { label: SITE.contactEmail, href: `mailto:${SITE.contactEmail}` },
             ].map((l) => (
               <FooterLink key={l.href} href={l.href}>
                 {l.label}
