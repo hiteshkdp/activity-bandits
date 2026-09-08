@@ -18,6 +18,14 @@ export const TOP_SELLER_SLUGS: string[] = [
   "ice-hockey-activity-book-for-kids",
 ];
 
+/**
+ * Books that carry the green "Parents love it" flag on their card.
+ * Add a slug here to badge it; remove to drop the badge.
+ */
+export const PARENTS_LOVE_IT: string[] = [
+  "airplane-activity-book-for-kids-ages-8-12",
+];
+
 /** Harry Kicker reading series, in story order. */
 export const SERIES_SLUGS: string[] = [
   "the-teamwork-triumph",
