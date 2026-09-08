@@ -10,7 +10,6 @@ import {
   HERO_COVER_SLUGS,
   CATEGORY_TILES,
   FILTERS,
-  PARENTS_LOVE_IT,
   matchesFilter,
 } from "@/data/featured";
 import { coverUrl } from "@/lib/amazon";
@@ -26,6 +25,7 @@ import {
   BTN_OUTLINE_TIGHT,
   BTN_OUTLINE_ON_INK_TIGHT,
   COVER_BOX,
+  ParentsLoveFlag,
 } from "@/components/ui";
 
 const byTitle = (a: Book, b: Book) => a.title.localeCompare(b.title);
@@ -270,11 +270,7 @@ export function Home() {
                 key={b.slug}
                 className="flex flex-col gap-4 rounded-ui bg-canvas-soft p-6 transition-transform duration-[140ms] ease-[ease] hover:-translate-y-0.5"
               >
-                {PARENTS_LOVE_IT.includes(b.slug) && (
-                  <span className="w-fit rounded-pill bg-accent-green px-3 py-1 text-eyebrow font-semibold uppercase text-white">
-                    Parents love it
-                  </span>
-                )}
+                <ParentsLoveFlag slug={b.slug} />
                 <a href={`/go/${b.slug}`} className="block">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img

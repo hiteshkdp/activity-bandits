@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { PARENTS_LOVE_IT } from "@/data/featured";
 
 /**
  * Shared design-system primitives.
@@ -50,6 +51,19 @@ export function Eyebrow({ children }: { children: ReactNode }) {
     <p className="w-fit rounded-pill bg-accent-blue px-4 py-[9px] text-eyebrow font-semibold uppercase text-white">
       {children}
     </p>
+  );
+}
+
+/**
+ * Green "Parents love it" flag. Renders only for the books listed in
+ * PARENTS_LOVE_IT, so callers can drop it into any card unconditionally.
+ */
+export function ParentsLoveFlag({ slug }: { slug: string }) {
+  if (!PARENTS_LOVE_IT.includes(slug)) return null;
+  return (
+    <span className="w-fit rounded-pill bg-accent-green px-3 py-1 text-eyebrow font-semibold uppercase text-white">
+      Parents love it
+    </span>
   );
 }
 
