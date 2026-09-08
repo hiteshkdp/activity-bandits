@@ -28,10 +28,19 @@ export const SITE = {
   contactEmail: "hello@example.com",
 
   /**
-   * Canonical site URL. Update to your real domain once purchased
-   * (e.g. "https://yourpenname.com"). Used for OpenGraph/canonical URLs.
+   * Canonical site URL — used for canonical/OpenGraph links.
+   *
+   * Resolved automatically so it is never wrong:
+   *   1. NEXT_PUBLIC_SITE_URL  — set this in Vercel once the real domain is
+   *      live (e.g. "https://activitybandits.com").
+   *   2. The Vercel production URL, on any deploy without that set.
+   *   3. localhost, in dev.
    */
-  url: "https://example.com",
+  url:
+    process.env.NEXT_PUBLIC_SITE_URL ??
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : "http://localhost:3000"),
 
   /** Social links shown in the footer. Leave blank to hide. */
   socials: {
