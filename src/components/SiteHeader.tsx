@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { SITE } from "@/config/site";
@@ -27,11 +27,6 @@ const NAV_PILL =
 export function SiteHeader() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-
-  // Close the panel whenever the route changes.
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
 
   // Only real routes get the active weight. The "/#" links are anchors to
   // sections of the home page, so treating them as "current page" bolded
