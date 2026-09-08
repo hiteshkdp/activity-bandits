@@ -95,8 +95,7 @@ export function SiteFooter({
         </div>
         <p className="max-w-[70ch] text-caption text-mute">
           © Activity Bandits. You&apos;ll be sent to your local Amazon store to
-          complete any purchase. As an Amazon Associate we may earn from
-          qualifying purchases.
+          complete any purchase.
         </p>
       </div>
     </footer>
