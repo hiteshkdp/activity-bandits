@@ -77,7 +77,7 @@ export function CrossSell({
         <p className="text-copy text-canvas-soft">{blurb}</p>
         {/* Tight variants so the pair stays side by side on a phone. */}
         <div className="flex flex-wrap gap-2 sm:gap-3">
-          <a href={`/go/${slug}`} className={BTN_PRIMARY_TIGHT}>
+          <a href={`/go/${slug}`} className={BTN_PRIMARY_TIGHT} rel="nofollow">
             Buy on Amazon
           </a>
           <button

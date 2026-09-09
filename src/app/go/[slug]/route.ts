@@ -15,6 +15,7 @@ import { MARKETPLACES, marketplaceForCountry } from "@/data/marketplaces";
 import { amazonProductUrl } from "@/lib/amazon";
 import { withAffiliateTag } from "@/lib/affiliate";
 import { logBuyClick } from "@/lib/analytics";
+import { isBot } from "@/lib/bots";
 
 // This redirect depends on the visitor's country, so it must run per-request and
 // never be cached at the edge/CDN (otherwise one visitor's destination would be
@@ -54,14 +55,22 @@ export async function GET(
 
   // Record the conversion intent (book + where they were sent). Runs AFTER the
   // response is sent, so it never delays the redirect to Amazon.
-  after(() =>
-    logBuyClick({
-      book: book.slug,
-      country: country || "UNKNOWN",
-      marketplace: MARKETPLACES[marketplace].label,
-      utmSource: request.nextUrl.searchParams.get("utm_source") ?? undefined,
-    }),
-  );
+  //
+  // Crawlers still get redirected — link previews and archivers should work —
+  // but their clicks are not recorded, or the catalogue's ~178 buy links would
+  // fill the analytics with fake purchase intent on every crawl.
+  const automated = isBot(request.headers.get("user-agent"));
+
+  if (!automated) {
+    after(() =>
+      logBuyClick({
+        book: book.slug,
+        country: country || "UNKNOWN",
+        marketplace: MARKETPLACES[marketplace].label,
+        utmSource: request.nextUrl.searchParams.get("utm_source") ?? undefined,
+      }),
+    );
+  }
 
   return noStoreRedirect(destination);
 }

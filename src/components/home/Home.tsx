@@ -256,7 +256,7 @@ export function Home() {
                 className="flex flex-col gap-4 rounded-ui bg-canvas-soft p-6 transition-transform duration-[140ms] ease-[ease] hover:-translate-y-0.5"
               >
                 <ParentsLoveFlag slug={b.slug} />
-                <a href={`/go/${b.slug}`} className="block">
+                <a href={`/go/${b.slug}`} className="block" rel="nofollow">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={coverUrl(b)}
@@ -277,7 +277,7 @@ export function Home() {
                 <a
                   href={`/go/${b.slug}`}
                   className={`${BTN_PRIMARY} mt-auto`}
-                >
+                 rel="nofollow">
                   Buy on Amazon
                 </a>
               </div>
@@ -319,7 +319,7 @@ export function Home() {
                 key={b.slug}
                 className="flex min-h-[200px] flex-col gap-4 rounded-ui bg-ink p-6 text-on-primary transition-transform duration-[140ms] ease-[ease] hover:-translate-y-0.5"
               >
-                <a href={`/go/${b.slug}`} className="block">
+                <a href={`/go/${b.slug}`} className="block" rel="nofollow">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={coverUrl(b)}
@@ -338,7 +338,7 @@ export function Home() {
                 <a
                   href={`/go/${b.slug}`}
                   className={`${BTN_PRIMARY} mt-auto`}
-                >
+                 rel="nofollow">
                   Buy on Amazon
                 </a>
               </div>
@@ -463,7 +463,7 @@ function FeatureHalf({
 }) {
   return (
     <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-8">
-      <a href={`/go/${book.slug}`} className="block flex-none">
+      <a href={`/go/${book.slug}`} className="block flex-none" rel="nofollow">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={coverUrl(book)}
@@ -482,7 +482,7 @@ function FeatureHalf({
           <a
             href={`/go/${book.slug}`}
             className={`${BTN_PRIMARY_COMPACT} flex-1 sm:flex-none`}
-          >
+           rel="nofollow">
             Buy on Amazon
           </a>
           <button

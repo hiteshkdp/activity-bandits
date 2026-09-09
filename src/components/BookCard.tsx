@@ -17,7 +17,7 @@ export function BookCard({ book }: { book: Book }) {
   return (
     <div className="flex flex-col gap-3 rounded-ui border border-mute bg-canvas p-6 transition-[background-color,color,border-color,transform] duration-[140ms] ease-[ease] hover:border-ink">
       <ParentsLoveFlag slug={book.slug} />
-      <a href={buyHref} className="block">
+      <a href={buyHref} className="block" rel="nofollow">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={coverUrl(book)}
@@ -35,7 +35,7 @@ export function BookCard({ book }: { book: Book }) {
       >
         {book.title}
       </Link>
-      <a href={buyHref} className={`${BTN_PRIMARY} mt-auto`}>
+      <a href={buyHref} className={`${BTN_PRIMARY} mt-auto`} rel="nofollow">
         Buy on Amazon
       </a>
     </div>

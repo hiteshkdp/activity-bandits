@@ -120,7 +120,7 @@ export default async function BookPage({
                   {book.blurb}
                 </p>
 
-                <a href={goHref} className={BTN_PRIMARY}>
+                <a href={goHref} className={BTN_PRIMARY} rel="nofollow">
                   Buy on Amazon
                 </a>
                 <p className="text-caption text-body-mid">
